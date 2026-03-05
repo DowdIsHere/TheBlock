@@ -11,7 +11,14 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ error: 'Email and password are required' }, { status: 400 })
     }
 
-    const user = await prisma.user.findUnique({ where: { email } })
+    let user
+    try {
+      user = await prisma.user.findUnique({ where: { email } })
+    } catch (dbError: any) {
+      console.error('Database connection error:', dbError)
+      return NextResponse.json({ error: 'Database connection failed' }, { status: 500 })
+    }
+
     if (!user) {
       return NextResponse.json({ error: 'Invalid email or password' }, { status: 401 })
     }
@@ -22,12 +29,16 @@ export async function POST(request: NextRequest) {
     }
 
     // Sign in with Supabase for session management
-    const supabase = createClient()
-    await supabase.auth.signInWithPassword({ email, password })
+    try {
+      const supabase = createClient()
+      await supabase.auth.signInWithPassword({ email, password })
+    } catch (supaErr) {
+      console.error('Supabase auth error (non-fatal):', supaErr)
+    }
 
     return NextResponse.json({ id: user.id, email: user.email, name: user.name })
-  } catch (error) {
+  } catch (error: any) {
     console.error('Login error:', error)
-    return NextResponse.json({ error: 'Something went wrong' }, { status: 500 })
+    return NextResponse.json({ error: error?.message || 'Login failed' }, { status: 500 })
   }
 }

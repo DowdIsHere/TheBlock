@@ -15,7 +15,15 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ error: 'Password must be at least 6 characters' }, { status: 400 })
     }
 
-    const existing = await prisma.user.findUnique({ where: { email } })
+    // Check if user already exists
+    let existing
+    try {
+      existing = await prisma.user.findUnique({ where: { email } })
+    } catch (dbError: any) {
+      console.error('Database connection error:', dbError)
+      return NextResponse.json({ error: 'Database connection failed. Tables may not exist yet.' }, { status: 500 })
+    }
+
     if (existing) {
       return NextResponse.json({ error: 'An account with this email already exists' }, { status: 409 })
     }
@@ -27,12 +35,19 @@ export async function POST(request: NextRequest) {
     })
 
     // Sign in with Supabase for session management
-    const supabase = createClient()
-    await supabase.auth.signUp({ email, password })
+    try {
+      const supabase = createClient()
+      const { error: supaError } = await supabase.auth.signUp({ email, password })
+      if (supaError) {
+        console.error('Supabase auth signup error (non-fatal):', supaError.message)
+      }
+    } catch (supaErr) {
+      console.error('Supabase auth error (non-fatal):', supaErr)
+    }
 
     return NextResponse.json({ id: user.id, email: user.email, name: user.name }, { status: 201 })
-  } catch (error) {
+  } catch (error: any) {
     console.error('Signup error:', error)
-    return NextResponse.json({ error: 'Something went wrong' }, { status: 500 })
+    return NextResponse.json({ error: error?.message || 'Signup failed' }, { status: 500 })
   }
 }
