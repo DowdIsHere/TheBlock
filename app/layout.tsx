@@ -53,24 +53,14 @@ export default function RootLayout({
               <Link href="/messages" className="nav-item">
                 <span className="icon">💬</span>
                 <span>Messages</span>
-                <span className="badge">3</span>
               </Link>
             </nav>
 
             <div className="nav-section">
               <div className="nav-label">My Groups</div>
-              <Link href="/groups/cbi-researchers" className="nav-item">
-                <span className="icon">🧠</span>
-                <span>CBI Researchers</span>
-              </Link>
-              <Link href="/groups/book-club" className="nav-item">
-                <span className="icon">📚</span>
-                <span>Book Club</span>
-              </Link>
-              <Link href="/groups/tech-cognition" className="nav-item">
-                <span className="icon">💼</span>
-                <span>Tech & Cognition</span>
-              </Link>
+              <p style={{fontSize: '0.8rem', color: 'var(--text-muted)', padding: '4px 12px'}}>
+                Join groups to see them here.
+              </p>
             </div>
 
             <div className="nav-spacer"></div>
@@ -107,33 +97,16 @@ export default function RootLayout({
 
             <div className="sidebar-section">
               <div className="sidebar-title">Suggested Groups</div>
-              <div className="group-card">
-                <div className="group-name">Neuroscience Daily</div>
-                <div className="group-members">4.2k members</div>
-              </div>
-              <div className="group-card">
-                <div className="group-name">Cognitive Wellness</div>
-                <div className="group-members">2.1k members</div>
-              </div>
+              <p style={{fontSize: '0.85rem', color: 'var(--text-muted)'}}>
+                Groups will appear here as the community grows.
+              </p>
             </div>
 
             <div className="sidebar-section">
               <div className="sidebar-title">Trending</div>
-              <div className="trend-item">
-                <div className="trend-category">Cognition</div>
-                <div className="trend-topic">Parser Collisions at Work</div>
-                <div className="trend-count">1.2k discussing</div>
-              </div>
-              <div className="trend-item">
-                <div className="trend-category">Research</div>
-                <div className="trend-topic">Gradient Mapping Studies</div>
-                <div className="trend-count">843 discussing</div>
-              </div>
-              <div className="trend-item">
-                <div className="trend-category">Education</div>
-                <div className="trend-topic">Adaptive Learning</div>
-                <div className="trend-count">567 discussing</div>
-              </div>
+              <p style={{fontSize: '0.85rem', color: 'var(--text-muted)'}}>
+                Nothing trending yet. Check back soon.
+              </p>
             </div>
           </aside>
         </div>
