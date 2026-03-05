@@ -1,5 +1,6 @@
 import './globals.css'
 import Link from 'next/link'
+import { ThemeToggle } from './ThemeToggle'
 
 export const metadata = {
   title: 'The Cognition Block',
@@ -12,7 +13,23 @@ export default function RootLayout({
   children: React.ReactNode
 }) {
   return (
-    <html lang="en">
+    <html lang="en" suppressHydrationWarning>
+      <head>
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `
+              (function() {
+                try {
+                  var stored = localStorage.getItem('theme');
+                  if (stored === 'dark' || stored === 'light') {
+                    document.documentElement.classList.add(stored);
+                  }
+                } catch(e) {}
+              })();
+            `,
+          }}
+        />
+      </head>
       <body>
         <div className="app-layout">
           {/* Left Sidebar */}
@@ -58,16 +75,18 @@ export default function RootLayout({
 
             <div className="nav-spacer"></div>
 
+            <ThemeToggle />
+
             <Link href="/settings" className="nav-item">
               <span className="icon">⚙️</span>
               <span>Settings</span>
             </Link>
 
             <Link href="/profile" className="user-card">
-              <div className="avatar">JM</div>
+              <div className="avatar">You</div>
               <div>
-                <div className="user-name">J.D. Mercer</div>
-                <div className="user-parser">Visionary • AFS</div>
+                <div className="user-name">My Profile</div>
+                <div className="user-parser">Set up your Parser</div>
               </div>
             </Link>
           </aside>
@@ -81,30 +100,9 @@ export default function RootLayout({
           <aside className="sidebar-right">
             <div className="sidebar-section">
               <div className="sidebar-title">Parsers You May Click With</div>
-              <div className="match-card">
-                <div className="avatar">AL</div>
-                <div className="match-info">
-                  <div className="match-name">Alex Liu</div>
-                  <div className="match-parser">Harmonious • BFB</div>
-                </div>
-                <div className="match-score">92%</div>
-              </div>
-              <div className="match-card">
-                <div className="avatar" style={{background: 'linear-gradient(135deg, #a855f7, #ffc857)'}}>JP</div>
-                <div className="match-info">
-                  <div className="match-name">Jordan Patel</div>
-                  <div className="match-parser">Foresighted • AFB</div>
-                </div>
-                <div className="match-score">87%</div>
-              </div>
-              <div className="match-card">
-                <div className="avatar" style={{background: 'linear-gradient(135deg, #ffc857, #00d4aa)'}}>RN</div>
-                <div className="match-info">
-                  <div className="match-name">Riley Nguyen</div>
-                  <div className="match-parser">Collaborative • BFO</div>
-                </div>
-                <div className="match-score">84%</div>
-              </div>
+              <p style={{fontSize: '0.85rem', color: 'var(--text-muted)'}}>
+                Connect with others to see compatibility matches.
+              </p>
             </div>
 
             <div className="sidebar-section">
