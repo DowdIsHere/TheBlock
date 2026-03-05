@@ -44,7 +44,7 @@ export default function SignupPage() {
     <div className="auth-page">
       <div className="auth-card">
         <div className="auth-logo">The Cognition Block</div>
-        <div className="auth-logo-sub">Where cognition connects</div>
+        <div className="auth-logo-sub">Let's talk about it...</div>
 
         <h1 className="auth-title">Create Account</h1>
 

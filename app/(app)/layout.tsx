@@ -33,7 +33,7 @@ export default async function AppLayout({
       {/* Left Sidebar */}
       <aside className="sidebar-left">
         <div className="logo">The Cognition Block</div>
-        <div className="logo-sub">Where cognition connects</div>
+        <div className="logo-sub">Let's talk about it...</div>
 
         <nav className="nav-section">
           <Link href="/feed" className="nav-item">

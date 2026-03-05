@@ -2,7 +2,7 @@ import './globals.css'
 
 export const metadata = {
   title: 'The Cognition Block',
-  description: 'Where cognition connects',
+  description: "Let's talk about it...",
 }
 
 export default function RootLayout({
