@@ -30,7 +30,7 @@ export default async function ProfilePage() {
 
   if (!user) redirect('/login')
 
-  const initials = user.name.split(' ').map(w => w[0]).join('').slice(0, 2).toUpperCase()
+  const initials = `${user.firstName[0]}${user.lastName[0]}`.toUpperCase()
 
   function timeAgo(date: Date) {
     const seconds = Math.floor((Date.now() - date.getTime()) / 1000)
@@ -47,7 +47,7 @@ export default async function ProfilePage() {
         <div className="profile-info-section">
           <div className="profile-avatar-large">{initials}</div>
           <div className="profile-details">
-            <div className="profile-name-large">{user.name}</div>
+            <div className="profile-name-large">{user.firstName} {user.lastName}</div>
             <div className="profile-parser-tag">{user.parserName || 'Parser not yet set'}</div>
             <div className="profile-bio">
               {user.bio || 'Complete the CogniMap assessment to discover your cognitive architecture and Parser Profile.'}
@@ -89,7 +89,7 @@ export default async function ProfilePage() {
             <div className="post-header">
               <div className="post-avatar">{initials}</div>
               <div>
-                <div className="post-author">{user.name}</div>
+                <div className="post-author">{user.firstName} {user.lastName}</div>
                 <div className="post-meta">
                   {user.parserName || 'Parser not set'} · {timeAgo(post.createdAt)}
                 </div>

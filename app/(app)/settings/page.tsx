@@ -4,7 +4,8 @@ import { useState, useEffect } from 'react'
 import { useRouter } from 'next/navigation'
 
 export default function SettingsPage() {
-  const [name, setName] = useState('')
+  const [firstName, setFirstName] = useState('')
+  const [lastName, setLastName] = useState('')
   const [bio, setBio] = useState('')
   const [loading, setLoading] = useState(true)
   const [saving, setSaving] = useState(false)
@@ -16,7 +17,8 @@ export default function SettingsPage() {
       const res = await fetch('/api/auth/me')
       const data = await res.json()
       if (data.user) {
-        setName(data.user.name || '')
+        setFirstName(data.user.firstName || '')
+        setLastName(data.user.lastName || '')
         setBio(data.user.bio || '')
       }
       setLoading(false)
@@ -33,7 +35,7 @@ export default function SettingsPage() {
       const res = await fetch('/api/auth/update', {
         method: 'PATCH',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ name, bio }),
+        body: JSON.stringify({ firstName, lastName, bio }),
       })
 
       if (res.ok) {
@@ -68,12 +70,24 @@ export default function SettingsPage() {
       <div className="card" style={{ padding: '24px' }}>
         <form onSubmit={handleSave}>
           <div className="auth-field">
-            <label htmlFor="name">Display Name</label>
+            <label htmlFor="firstName">First Name</label>
             <input
-              id="name"
+              id="firstName"
               type="text"
-              value={name}
-              onChange={e => setName(e.target.value)}
+              value={firstName}
+              onChange={e => setFirstName(e.target.value)}
+              required
+              style={{ width: '100%', padding: '10px 14px' }}
+            />
+          </div>
+
+          <div className="auth-field" style={{ marginTop: '16px' }}>
+            <label htmlFor="lastName">Last Name</label>
+            <input
+              id="lastName"
+              type="text"
+              value={lastName}
+              onChange={e => setLastName(e.target.value)}
               required
               style={{ width: '100%', padding: '10px 14px' }}
             />

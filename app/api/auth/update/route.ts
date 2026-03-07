@@ -11,19 +11,20 @@ export async function PATCH(request: NextRequest) {
       return NextResponse.json({ error: 'Not authenticated' }, { status: 401 })
     }
 
-    const { name, bio } = await request.json()
+    const { firstName, lastName, bio } = await request.json()
 
-    if (!name?.trim()) {
-      return NextResponse.json({ error: 'Name is required' }, { status: 400 })
+    if (!firstName?.trim() || !lastName?.trim()) {
+      return NextResponse.json({ error: 'First name and last name are required' }, { status: 400 })
     }
 
     const user = await prisma.user.update({
       where: { email: supaUser.email },
       data: {
-        name: name.trim(),
+        firstName: firstName.trim(),
+        lastName: lastName.trim(),
         bio: bio?.trim() || null,
       },
-      select: { id: true, name: true, bio: true }
+      select: { id: true, firstName: true, lastName: true, bio: true }
     })
 
     return NextResponse.json({ user })

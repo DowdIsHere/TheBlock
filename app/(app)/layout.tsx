@@ -19,14 +19,14 @@ export default async function AppLayout({
 
   const user = await prisma.user.findUnique({
     where: { email: supaUser.email },
-    select: { id: true, name: true, parserName: true }
+    select: { id: true, firstName: true, lastName: true, parserName: true }
   })
 
   if (!user) {
     redirect('/login')
   }
 
-  const initials = user.name.split(' ').map(w => w[0]).join('').slice(0, 2).toUpperCase()
+  const initials = `${user.firstName[0]}${user.lastName[0]}`.toUpperCase()
 
   return (
     <div className="app-layout">
@@ -75,7 +75,7 @@ export default async function AppLayout({
         <Link href="/profile" className="user-card">
           <div className="avatar">{initials}</div>
           <div>
-            <div className="user-name">{user.name}</div>
+            <div className="user-name">{user.firstName} {user.lastName}</div>
             <div className="user-parser">{user.parserName || 'Set up your Parser'}</div>
           </div>
         </Link>

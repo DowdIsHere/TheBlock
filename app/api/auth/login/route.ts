@@ -36,7 +36,7 @@ export async function POST(request: NextRequest) {
       console.error('Supabase auth error (non-fatal):', supaErr)
     }
 
-    return NextResponse.json({ id: user.id, email: user.email, name: user.name })
+    return NextResponse.json({ id: user.id, email: user.email, firstName: user.firstName, lastName: user.lastName })
   } catch (error: any) {
     console.error('Login error:', error)
     return NextResponse.json({ error: error?.message || 'Login failed' }, { status: 500 })

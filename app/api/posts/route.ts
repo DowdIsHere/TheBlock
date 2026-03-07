@@ -9,7 +9,7 @@ export async function GET() {
       take: 50,
       include: {
         author: {
-          select: { id: true, name: true, parserName: true, avatarUrl: true }
+          select: { id: true, firstName: true, lastName: true, parserName: true, avatarUrl: true }
         },
         _count: { select: { comments: true, likes: true } }
       }
@@ -45,7 +45,7 @@ export async function POST(request: NextRequest) {
       data: { content: content.trim(), authorId: dbUser.id },
       include: {
         author: {
-          select: { id: true, name: true, parserName: true, avatarUrl: true }
+          select: { id: true, firstName: true, lastName: true, parserName: true, avatarUrl: true }
         },
         _count: { select: { comments: true, likes: true } }
       }

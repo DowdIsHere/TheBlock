@@ -5,10 +5,10 @@ import { createClient } from '@/utils/supabase/server'
 
 export async function POST(request: NextRequest) {
   try {
-    const { email, password, name } = await request.json()
+    const { email, password, firstName, lastName } = await request.json()
 
-    if (!email || !password || !name) {
-      return NextResponse.json({ error: 'Email, password, and name are required' }, { status: 400 })
+    if (!email || !password || !firstName || !lastName) {
+      return NextResponse.json({ error: 'Email, password, first name, and last name are required' }, { status: 400 })
     }
 
     if (password.length < 6) {
@@ -31,7 +31,7 @@ export async function POST(request: NextRequest) {
     const hashedPassword = await bcrypt.hash(password, 12)
 
     const user = await prisma.user.create({
-      data: { email, password: hashedPassword, name },
+      data: { email, password: hashedPassword, firstName, lastName },
     })
 
     // Sign in with Supabase for session management
@@ -45,7 +45,7 @@ export async function POST(request: NextRequest) {
       console.error('Supabase auth error (non-fatal):', supaErr)
     }
 
-    return NextResponse.json({ id: user.id, email: user.email, name: user.name }, { status: 201 })
+    return NextResponse.json({ id: user.id, email: user.email, firstName: user.firstName, lastName: user.lastName }, { status: 201 })
   } catch (error: any) {
     console.error('Signup error:', error)
     return NextResponse.json({ error: error?.message || 'Signup failed' }, { status: 500 })

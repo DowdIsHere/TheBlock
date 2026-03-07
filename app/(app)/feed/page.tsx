@@ -8,7 +8,8 @@ interface Post {
   createdAt: string
   author: {
     id: string
-    name: string
+    firstName: string
+    lastName: string
     parserName: string | null
     avatarUrl: string | null
   }
@@ -111,13 +112,13 @@ export default function FeedPage() {
         </div>
       ) : (
         posts.map(post => {
-          const initials = post.author.name.split(' ').map(w => w[0]).join('').slice(0, 2).toUpperCase()
+          const initials = `${post.author.firstName[0]}${post.author.lastName[0]}`.toUpperCase()
           return (
             <div key={post.id} className="post-card">
               <div className="post-header">
                 <div className="post-avatar">{initials}</div>
                 <div>
-                  <div className="post-author">{post.author.name}</div>
+                  <div className="post-author">{post.author.firstName} {post.author.lastName}</div>
                   <div className="post-meta">
                     {post.author.parserName || 'Parser not set'} · {timeAgo(post.createdAt)}
                   </div>
