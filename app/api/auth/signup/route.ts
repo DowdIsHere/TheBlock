@@ -34,13 +34,12 @@ export async function POST(request: NextRequest) {
       data: { email, password: hashedPassword, firstName, lastName },
     })
 
-    // Sign in with Supabase for session management
+    // Sign up with Supabase, then sign in to establish session
     try {
       const supabase = createClient()
-      const { error: supaError } = await supabase.auth.signUp({ email, password })
-      if (supaError) {
-        console.error('Supabase auth signup error (non-fatal):', supaError.message)
-      }
+      await supabase.auth.signUp({ email, password })
+      // Sign in immediately to create a session (signUp alone may not if email confirmation is on)
+      await supabase.auth.signInWithPassword({ email, password })
     } catch (supaErr) {
       console.error('Supabase auth error (non-fatal):', supaErr)
     }
