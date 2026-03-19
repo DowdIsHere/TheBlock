@@ -4,6 +4,7 @@ import { createClient } from '@/utils/supabase/server'
 import { prisma } from '@/lib/prisma'
 import { redirect } from 'next/navigation'
 import { LogoutButton } from './LogoutButton'
+import { MobileNav } from './MobileNav'
 
 export default async function AppLayout({
   children,
@@ -109,6 +110,8 @@ export default async function AppLayout({
           </p>
         </div>
       </aside>
+
+      <MobileNav />
     </div>
   )
 }

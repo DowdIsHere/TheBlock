@@ -1296,8 +1296,15 @@ label {
   .sidebar-right {
     display: none;
   }
+  .mobile-nav {
+    display: flex;
+  }
+  .main-content {
+    padding-bottom: 80px;
+  }
   .messages-layout {
     grid-template-columns: 1fr;
+    height: calc(100vh - 180px);
   }
   .conversations-list {
     display: none;
@@ -1312,6 +1319,49 @@ label {
   .main-content {
     padding: 20px 16px;
   }
+}
+
+/* ===========================
+   Mobile Bottom Navigation
+   =========================== */
+
+.mobile-nav {
+  display: none;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: var(--bg-card);
+  border-top: 1px solid var(--border);
+  padding: 6px 0 env(safe-area-inset-bottom, 6px);
+  z-index: 100;
+  box-shadow: 0 -2px 12px rgba(0,0,0,0.08);
+}
+
+.mobile-nav-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+  padding: 6px 0;
+  color: var(--text-muted);
+  text-decoration: none;
+  font-size: 0.65rem;
+  font-weight: 500;
+  flex: 1;
+}
+
+.mobile-nav-item.active {
+  color: var(--blue-500);
+}
+
+.mobile-nav-icon {
+  font-size: 1.2rem;
+  line-height: 1;
+}
+
+.mobile-nav-label {
+  font-family: 'IBM Plex Sans', system-ui, sans-serif;
 }
 
 /* ===========================
