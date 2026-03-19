@@ -4,8 +4,8 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "build": "prisma generate && prisma db push --skip-generate --accept-data-loss || true && next build",
-    "start": "next start -p $PORT",
+    "build": "prisma generate && next build",
+    "start": "next start",
     "postinstall": "prisma generate",
     "lint": "next lint",
     "db:push": "prisma db push",
