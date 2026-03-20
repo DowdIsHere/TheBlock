@@ -24,11 +24,14 @@ model User {
   temporalAxis  String?   // "Past", "Present", "Future"
   referenceAxis String?   // "Self", "Balanced", "Other"
   
+  onboardingComplete Boolean @default(false)
+
   createdAt     DateTime  @default(now())
   updatedAt     DateTime  @updatedAt
 
   // Relations
   posts         Post[]
+  interests     ContentInterest[]
   comments      Comment[]
   likes         Like[]
   sentMessages     Message[] @relation("SentMessages")
@@ -124,6 +127,18 @@ model GroupMember {
   joinedAt  DateTime @default(now())
 
   @@unique([userId, groupId])
+}
+
+model ContentInterest {
+  id        String   @id @default(cuid())
+  city      String   // "architecture", "relations", "assessment", "clinical"
+
+  userId    String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  createdAt DateTime @default(now())
+
+  @@unique([userId, city])
 }
 
 model Connection {

@@ -32,7 +32,7 @@ export default function SignupPage() {
         return
       }
 
-      router.push('/feed')
+      router.push('/onboarding')
       router.refresh()
     } catch {
       setError('Something went wrong. Please try again.')

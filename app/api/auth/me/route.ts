@@ -22,6 +22,7 @@ export async function GET() {
         bio: true,
         parserName: true,
         parserCode: true,
+        onboardingComplete: true,
         _count: {
           select: {
             posts: true,
