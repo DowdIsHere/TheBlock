@@ -1,38 +1,29 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { prisma } from '@/lib/prisma'
-import { createClient } from '@/utils/supabase/server'
+import { getSessionUserId } from '@/lib/session'
 
-// POST — join a group
+// POST — join/leave a group
 export async function POST(
   request: NextRequest,
   { params }: { params: { id: string } }
 ) {
   try {
-    const supabase = createClient()
-    const { data: { user: supaUser } } = await supabase.auth.getUser()
-    if (!supaUser?.email) {
+    const userId = getSessionUserId()
+    if (!userId) {
       return NextResponse.json({ error: 'Not authenticated' }, { status: 401 })
     }
 
-    const dbUser = await prisma.user.findUnique({ where: { email: supaUser.email } })
-    if (!dbUser) {
-      return NextResponse.json({ error: 'User not found' }, { status: 404 })
-    }
-
-    // Check if already a member
     const existing = await prisma.groupMember.findUnique({
-      where: { userId_groupId: { userId: dbUser.id, groupId: params.id } }
+      where: { userId_groupId: { userId, groupId: params.id } }
     })
 
     if (existing) {
-      // Leave group
       await prisma.groupMember.delete({ where: { id: existing.id } })
       return NextResponse.json({ joined: false })
     }
 
-    // Join group
     await prisma.groupMember.create({
-      data: { userId: dbUser.id, groupId: params.id }
+      data: { userId, groupId: params.id }
     })
 
     return NextResponse.json({ joined: true })

@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { prisma } from '@/lib/prisma'
-import { createClient } from '@/utils/supabase/server'
+import { getSessionUserId } from '@/lib/session'
 
 // POST — send/accept connection request
 export async function POST(
@@ -8,32 +8,24 @@ export async function POST(
   { params }: { params: { userId: string } }
 ) {
   try {
-    const supabase = createClient()
-    const { data: { user: supaUser } } = await supabase.auth.getUser()
-    if (!supaUser?.email) {
+    const userId = getSessionUserId()
+    if (!userId) {
       return NextResponse.json({ error: 'Not authenticated' }, { status: 401 })
-    }
-
-    const dbUser = await prisma.user.findUnique({ where: { email: supaUser.email } })
-    if (!dbUser) {
-      return NextResponse.json({ error: 'User not found' }, { status: 404 })
     }
 
     const targetId = params.userId
 
-    // Check if connection already exists in either direction
     const existing = await prisma.connection.findFirst({
       where: {
         OR: [
-          { userId: dbUser.id, connectedId: targetId },
-          { userId: targetId, connectedId: dbUser.id },
+          { userId, connectedId: targetId },
+          { userId: targetId, connectedId: userId },
         ]
       }
     })
 
     if (existing) {
-      if (existing.status === 'pending' && existing.connectedId === dbUser.id) {
-        // Accept incoming request
+      if (existing.status === 'pending' && existing.connectedId === userId) {
         const updated = await prisma.connection.update({
           where: { id: existing.id },
           data: { status: 'accepted' }
@@ -43,10 +35,9 @@ export async function POST(
       return NextResponse.json({ connection: existing, action: 'exists' })
     }
 
-    // Create new connection request
     const connection = await prisma.connection.create({
       data: {
-        userId: dbUser.id,
+        userId,
         connectedId: targetId,
         status: 'pending',
       }
@@ -65,22 +56,16 @@ export async function DELETE(
   { params }: { params: { userId: string } }
 ) {
   try {
-    const supabase = createClient()
-    const { data: { user: supaUser } } = await supabase.auth.getUser()
-    if (!supaUser?.email) {
+    const userId = getSessionUserId()
+    if (!userId) {
       return NextResponse.json({ error: 'Not authenticated' }, { status: 401 })
-    }
-
-    const dbUser = await prisma.user.findUnique({ where: { email: supaUser.email } })
-    if (!dbUser) {
-      return NextResponse.json({ error: 'User not found' }, { status: 404 })
     }
 
     await prisma.connection.deleteMany({
       where: {
         OR: [
-          { userId: dbUser.id, connectedId: params.userId },
-          { userId: params.userId, connectedId: dbUser.id },
+          { userId, connectedId: params.userId },
+          { userId: params.userId, connectedId: userId },
         ]
       }
     })

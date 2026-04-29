@@ -1477,38 +1477,43 @@ label {
 .onboarding-card {
   background: var(--bg-card);
   border: 1px solid var(--border);
-  border-radius: 16px;
-  padding: 40px 36px;
+  border-radius: 20px;
+  padding: 48px 44px;
   width: 100%;
-  max-width: 720px;
+  max-width: 760px;
   box-shadow: var(--shadow-md);
 }
 
 .onboarding-subtitle {
   text-align: center;
   color: var(--text-muted);
-  font-size: 0.9rem;
-  margin-bottom: 24px;
-  margin-top: -12px;
+  font-size: 1rem;
+  line-height: 1.5;
+  margin-bottom: 32px;
+  margin-top: -8px;
 }
 
 .city-grid {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 14px;
-  margin-bottom: 24px;
+  gap: 16px;
+  margin-bottom: 28px;
 }
 
 .city-card {
   background: var(--bg-inset);
   border: 2px solid var(--border);
-  border-radius: 14px;
-  padding: 18px 16px;
+  border-radius: 16px;
+  padding: 24px 22px;
   text-align: left;
   cursor: pointer;
-  transition: border-color 0.2s, box-shadow 0.2s, transform 0.15s;
+  transition: border-color 0.2s, box-shadow 0.2s, transform 0.15s, background 0.2s;
   font-family: inherit;
   color: inherit;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  min-height: 160px;
 }
 
 .city-card:hover {
@@ -1527,23 +1532,23 @@ label {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  margin-bottom: 10px;
 }
 
 .city-card-icon {
-  font-size: 1.6rem;
+  font-size: 2rem;
   line-height: 1;
 }
 
 .city-card-check {
-  width: 22px;
-  height: 22px;
+  width: 24px;
+  height: 24px;
   border-radius: 50%;
   border: 2px solid var(--border-strong);
   display: flex;
   align-items: center;
   justify-content: center;
   transition: background 0.15s, border-color 0.15s;
+  flex-shrink: 0;
 }
 
 .city-card-selected .city-card-check {
@@ -1554,41 +1559,24 @@ label {
 
 .city-card-name {
   font-family: 'Source Serif 4', Georgia, serif;
-  font-size: 1rem;
+  font-size: 1.15rem;
   font-weight: 700;
   color: var(--text-primary);
-  margin-bottom: 8px;
+  line-height: 1.25;
 }
 
 .city-card-selected .city-card-name {
   color: var(--city-color);
 }
 
-.city-card-topics {
-  list-style: none;
-  padding: 0;
+.city-card-blurb {
+  font-size: 0.9rem;
+  line-height: 1.45;
+  color: var(--text-muted);
   margin: 0;
-  display: flex;
-  flex-direction: column;
-  gap: 3px;
 }
 
-.city-card-topics li {
-  font-family: 'IBM Plex Mono', monospace;
-  font-size: 0.68rem;
-  color: var(--text-muted);
-  padding-left: 12px;
-  position: relative;
-}
-
-.city-card-topics li::before {
-  content: '\2022';
-  position: absolute;
-  left: 0;
-  color: var(--text-muted);
-}
-
-.city-card-selected .city-card-topics li {
+.city-card-selected .city-card-blurb {
   color: var(--text-secondary);
 }
 
@@ -1596,12 +1584,12 @@ label {
   display: block;
   width: 100%;
   text-align: center;
-  margin-top: 12px;
+  margin-top: 14px;
   background: none;
   border: none;
   color: var(--text-muted);
   font-family: 'IBM Plex Sans', system-ui, sans-serif;
-  font-size: 0.85rem;
+  font-size: 0.9rem;
   cursor: pointer;
   padding: 8px;
 }
@@ -1613,10 +1601,13 @@ label {
 
 @media (max-width: 600px) {
   .onboarding-card {
-    padding: 28px 20px;
+    padding: 32px 22px;
   }
   .city-grid {
     grid-template-columns: 1fr;
+  }
+  .city-card {
+    min-height: auto;
   }
 }
 

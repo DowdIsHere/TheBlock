@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { prisma } from '@/lib/prisma'
 import bcrypt from 'bcryptjs'
-import { createClient } from '@/utils/supabase/server'
+import { createSession } from '@/lib/session'
 
 export async function POST(request: NextRequest) {
   try {
@@ -15,7 +15,6 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ error: 'Password must be at least 6 characters' }, { status: 400 })
     }
 
-    // Check if user already exists
     let existing
     try {
       existing = await prisma.user.findUnique({ where: { email } })
@@ -34,15 +33,7 @@ export async function POST(request: NextRequest) {
       data: { email, password: hashedPassword, firstName, lastName },
     })
 
-    // Sign up with Supabase, then sign in to establish session
-    try {
-      const supabase = createClient()
-      await supabase.auth.signUp({ email, password })
-      // Sign in immediately to create a session (signUp alone may not if email confirmation is on)
-      await supabase.auth.signInWithPassword({ email, password })
-    } catch (supaErr) {
-      console.error('Supabase auth error (non-fatal):', supaErr)
-    }
+    createSession(user.id)
 
     return NextResponse.json({ id: user.id, email: user.email, firstName: user.firstName, lastName: user.lastName }, { status: 201 })
   } catch (error: any) {

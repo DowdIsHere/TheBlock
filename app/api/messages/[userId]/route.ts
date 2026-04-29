@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { prisma } from '@/lib/prisma'
-import { createClient } from '@/utils/supabase/server'
+import { getSessionUserId } from '@/lib/session'
 
 // GET — fetch messages between current user and target user
 export async function GET(
@@ -8,22 +8,16 @@ export async function GET(
   { params }: { params: { userId: string } }
 ) {
   try {
-    const supabase = createClient()
-    const { data: { user: supaUser } } = await supabase.auth.getUser()
-    if (!supaUser?.email) {
-      return NextResponse.json({ messages: [] })
-    }
-
-    const dbUser = await prisma.user.findUnique({ where: { email: supaUser.email } })
-    if (!dbUser) {
+    const currentUserId = getSessionUserId()
+    if (!currentUserId) {
       return NextResponse.json({ messages: [] })
     }
 
     const messages = await prisma.message.findMany({
       where: {
         OR: [
-          { senderId: dbUser.id, receiverId: params.userId },
-          { senderId: params.userId, receiverId: dbUser.id },
+          { senderId: currentUserId, receiverId: params.userId },
+          { senderId: params.userId, receiverId: currentUserId },
         ]
       },
       orderBy: { createdAt: 'asc' },
@@ -32,11 +26,10 @@ export async function GET(
       }
     })
 
-    // Mark unread messages as read
     await prisma.message.updateMany({
       where: {
         senderId: params.userId,
-        receiverId: dbUser.id,
+        receiverId: currentUserId,
         read: false,
       },
       data: { read: true }
@@ -47,7 +40,7 @@ export async function GET(
       select: { id: true, firstName: true, lastName: true, parserName: true }
     })
 
-    return NextResponse.json({ messages, otherUser, currentUserId: dbUser.id })
+    return NextResponse.json({ messages, otherUser, currentUserId })
   } catch (error) {
     console.error('Fetch messages error:', error)
     return NextResponse.json({ messages: [] })
@@ -60,15 +53,9 @@ export async function POST(
   { params }: { params: { userId: string } }
 ) {
   try {
-    const supabase = createClient()
-    const { data: { user: supaUser } } = await supabase.auth.getUser()
-    if (!supaUser?.email) {
+    const currentUserId = getSessionUserId()
+    if (!currentUserId) {
       return NextResponse.json({ error: 'Not authenticated' }, { status: 401 })
-    }
-
-    const dbUser = await prisma.user.findUnique({ where: { email: supaUser.email } })
-    if (!dbUser) {
-      return NextResponse.json({ error: 'User not found' }, { status: 404 })
     }
 
     const { content } = await request.json()
@@ -79,7 +66,7 @@ export async function POST(
     const message = await prisma.message.create({
       data: {
         content: content.trim(),
-        senderId: dbUser.id,
+        senderId: currentUserId,
         receiverId: params.userId,
       },
       include: {

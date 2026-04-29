@@ -1,17 +1,16 @@
 import { NextResponse } from 'next/server'
 import { prisma } from '@/lib/prisma'
-import { createClient } from '@/utils/supabase/server'
+import { getSessionUserId } from '@/lib/session'
 
 // GET — list all users for discovery (excluding current user)
 export async function GET() {
   try {
-    const supabase = createClient()
-    const { data: { user: supaUser } } = await supabase.auth.getUser()
-    if (!supaUser?.email) {
+    const userId = getSessionUserId()
+    if (!userId) {
       return NextResponse.json({ users: [] })
     }
 
-    const dbUser = await prisma.user.findUnique({ where: { email: supaUser.email } })
+    const dbUser = await prisma.user.findUnique({ where: { id: userId } })
     if (!dbUser) {
       return NextResponse.json({ users: [] })
     }

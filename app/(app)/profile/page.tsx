@@ -1,15 +1,13 @@
-import { createClient } from '@/utils/supabase/server'
 import { prisma } from '@/lib/prisma'
+import { getSessionUserId } from '@/lib/session'
 import { redirect } from 'next/navigation'
 
 export default async function ProfilePage() {
-  const supabase = createClient()
-  const { data: { user: supaUser } } = await supabase.auth.getUser()
-
-  if (!supaUser?.email) redirect('/login')
+  const userId = getSessionUserId()
+  if (!userId) redirect('/login')
 
   const user = await prisma.user.findUnique({
-    where: { email: supaUser.email },
+    where: { id: userId },
     include: {
       posts: {
         orderBy: { createdAt: 'desc' },
