@@ -32,6 +32,7 @@ model User {
   // Relations
   posts         Post[]
   interests     ContentInterest[]
+  moodCheckins  MoodCheckin[]
   comments      Comment[]
   likes         Like[]
   sentMessages     Message[] @relation("SentMessages")
@@ -139,6 +140,19 @@ model ContentInterest {
   createdAt DateTime @default(now())
 
   @@unique([userId, city])
+}
+
+model MoodCheckin {
+  id        String   @id @default(cuid())
+  mood      Int      // 1-5 scale
+  note      String?
+
+  userId    String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  createdAt DateTime @default(now())
+
+  @@index([userId, createdAt])
 }
 
 model Connection {

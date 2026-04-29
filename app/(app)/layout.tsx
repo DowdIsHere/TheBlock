@@ -5,6 +5,8 @@ import { prisma } from '@/lib/prisma'
 import { redirect } from 'next/navigation'
 import { LogoutButton } from './LogoutButton'
 import { MobileNav } from './MobileNav'
+import { CrisisResources } from './CrisisResources'
+import { SessionTimer } from './SessionTimer'
 
 export default async function AppLayout({
   children,
@@ -84,11 +86,14 @@ export default async function AppLayout({
 
       {/* Main Content */}
       <main className="main-content">
+        <SessionTimer />
         {children}
       </main>
 
       {/* Right Sidebar */}
       <aside className="sidebar-right">
+        <CrisisResources />
+
         <div className="sidebar-section">
           <div className="sidebar-title">Parsers You May Click With</div>
           <p style={{fontSize: '0.85rem', color: 'var(--text-muted)'}}>

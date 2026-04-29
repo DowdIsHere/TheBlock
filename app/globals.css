@@ -1619,3 +1619,312 @@ label {
     grid-template-columns: 1fr;
   }
 }
+
+/* ===========================
+   Crisis Resources
+   =========================== */
+
+.crisis-resources {
+  margin-bottom: 24px;
+}
+
+.crisis-toggle {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  width: 100%;
+  padding: 10px 14px;
+  background: var(--bg-inset);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  font-family: 'IBM Plex Sans', system-ui, sans-serif;
+  font-size: 0.85rem;
+  font-weight: 500;
+  color: var(--text-secondary);
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.crisis-toggle:hover {
+  border-color: var(--green-600);
+  color: var(--green-600);
+}
+
+.crisis-icon {
+  font-size: 1.1rem;
+}
+
+.crisis-panel {
+  margin-top: 8px;
+  padding: 14px;
+  background: var(--bg-inset);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+}
+
+.crisis-label {
+  font-size: 0.8rem;
+  color: var(--text-muted);
+  margin-bottom: 12px;
+  line-height: 1.4;
+}
+
+.crisis-link {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px;
+  border-radius: 8px;
+  text-decoration: none;
+  color: var(--text-primary);
+  transition: background 0.2s;
+  margin-bottom: 4px;
+}
+
+.crisis-link:hover {
+  background: var(--bg-card);
+}
+
+.crisis-link-primary {
+  background: rgba(5, 150, 105, 0.08);
+  border: 1px solid rgba(5, 150, 105, 0.2);
+}
+
+.crisis-link-primary:hover {
+  background: rgba(5, 150, 105, 0.14);
+}
+
+.crisis-link-icon {
+  font-size: 1.2rem;
+  flex-shrink: 0;
+}
+
+.crisis-link-title {
+  font-size: 0.82rem;
+  font-weight: 600;
+}
+
+.crisis-link-sub {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 0.7rem;
+  color: var(--text-muted);
+  margin-top: 1px;
+}
+
+/* ===========================
+   Mood Check-in
+   =========================== */
+
+.mood-checkin {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 18px 20px;
+  margin-bottom: 16px;
+  box-shadow: var(--shadow-sm);
+}
+
+.mood-checkin-done {
+  background: var(--status-preserved-bg);
+  border-color: rgba(5, 150, 105, 0.15);
+}
+
+.mood-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.mood-title {
+  font-family: 'Source Serif 4', Georgia, serif;
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+.mood-dismiss {
+  background: none;
+  border: none;
+  font-size: 1.3rem;
+  color: var(--text-muted);
+  cursor: pointer;
+  padding: 0 4px;
+  line-height: 1;
+}
+
+.mood-dismiss:hover {
+  color: var(--text-primary);
+}
+
+.mood-options {
+  display: flex;
+  gap: 8px;
+  margin-top: 14px;
+  justify-content: center;
+}
+
+.mood-option {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  padding: 10px 14px;
+  background: var(--bg-inset);
+  border: 2px solid var(--border);
+  border-radius: 12px;
+  cursor: pointer;
+  transition: all 0.2s;
+  flex: 1;
+}
+
+.mood-option:hover {
+  border-color: var(--blue-400);
+  box-shadow: var(--shadow-sm);
+}
+
+.mood-option.selected {
+  border-color: var(--blue-500);
+  background: var(--blue-50);
+}
+
+.mood-emoji {
+  font-size: 1.5rem;
+}
+
+.mood-label {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 0.65rem;
+  color: var(--text-muted);
+}
+
+.mood-option.selected .mood-label {
+  color: var(--blue-500);
+  font-weight: 500;
+}
+
+.mood-note-section {
+  display: flex;
+  gap: 8px;
+  margin-top: 12px;
+}
+
+.mood-note-input {
+  flex: 1;
+  padding: 8px 12px;
+  border-radius: 8px;
+  font-size: 0.85rem;
+  background: var(--bg-inset);
+  border: 1px solid var(--border);
+  color: var(--text-primary);
+  font-family: 'IBM Plex Sans', system-ui, sans-serif;
+}
+
+.mood-note-input:focus {
+  outline: none;
+  border-color: var(--blue-400);
+  box-shadow: var(--focus-ring);
+}
+
+.mood-submit {
+  padding: 8px 16px !important;
+  font-size: 0.8rem !important;
+}
+
+.mood-today-emoji {
+  font-size: 1.6rem;
+  flex-shrink: 0;
+}
+
+.mood-today-label {
+  font-size: 0.88rem;
+  color: var(--status-preserved-text);
+}
+
+.mood-today-sub {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 0.7rem;
+  color: var(--text-muted);
+  margin-top: 2px;
+}
+
+/* ===========================
+   Session Time Reminder
+   =========================== */
+
+.session-reminder {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 14px 18px;
+  margin-bottom: 16px;
+  background: var(--status-info-bg);
+  border: 1px solid rgba(37, 99, 235, 0.15);
+  border-radius: 12px;
+  animation: slideDown 0.3s ease;
+}
+
+@keyframes slideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.session-reminder-content {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex: 1;
+}
+
+.session-reminder-icon {
+  font-size: 1.2rem;
+  flex-shrink: 0;
+}
+
+.session-reminder-text {
+  font-size: 0.85rem;
+  color: var(--status-info-text);
+  line-height: 1.45;
+}
+
+.session-reminder-dismiss {
+  background: none;
+  border: 1px solid var(--status-info-text);
+  border-radius: 6px;
+  padding: 5px 12px;
+  font-family: 'IBM Plex Sans', system-ui, sans-serif;
+  font-size: 0.78rem;
+  font-weight: 500;
+  color: var(--status-info-text);
+  cursor: pointer;
+  white-space: nowrap;
+  transition: all 0.2s;
+}
+
+.session-reminder-dismiss:hover {
+  background: var(--status-info-text);
+  color: var(--bg-card);
+}
+
+@media (max-width: 600px) {
+  .mood-options {
+    gap: 4px;
+  }
+  .mood-option {
+    padding: 8px 6px;
+  }
+  .mood-emoji {
+    font-size: 1.2rem;
+  }
+  .session-reminder {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}

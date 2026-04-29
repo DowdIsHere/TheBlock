@@ -5,7 +5,8 @@ CREATE TABLE IF NOT EXISTS "User" (
     "id" TEXT NOT NULL DEFAULT gen_random_uuid()::text,
     "email" TEXT NOT NULL,
     "password" TEXT NOT NULL,
-    "name" TEXT NOT NULL,
+    "firstName" TEXT NOT NULL,
+    "lastName" TEXT NOT NULL,
     "avatarUrl" TEXT,
     "bio" TEXT,
     "parserName" TEXT,
@@ -13,6 +14,7 @@ CREATE TABLE IF NOT EXISTS "User" (
     "spatialAxis" TEXT,
     "temporalAxis" TEXT,
     "referenceAxis" TEXT,
+    "onboardingComplete" BOOLEAN NOT NULL DEFAULT false,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     CONSTRAINT "User_pkey" PRIMARY KEY ("id")
@@ -82,6 +84,27 @@ CREATE TABLE IF NOT EXISTS "GroupMember" (
 
 CREATE UNIQUE INDEX IF NOT EXISTS "GroupMember_userId_groupId_key" ON "GroupMember"("userId", "groupId");
 
+CREATE TABLE IF NOT EXISTS "ContentInterest" (
+    "id" TEXT NOT NULL DEFAULT gen_random_uuid()::text,
+    "city" TEXT NOT NULL,
+    "userId" TEXT NOT NULL,
+    "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    CONSTRAINT "ContentInterest_pkey" PRIMARY KEY ("id")
+);
+
+CREATE UNIQUE INDEX IF NOT EXISTS "ContentInterest_userId_city_key" ON "ContentInterest"("userId", "city");
+
+CREATE TABLE IF NOT EXISTS "MoodCheckin" (
+    "id" TEXT NOT NULL DEFAULT gen_random_uuid()::text,
+    "mood" INTEGER NOT NULL,
+    "note" TEXT,
+    "userId" TEXT NOT NULL,
+    "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    CONSTRAINT "MoodCheckin_pkey" PRIMARY KEY ("id")
+);
+
+CREATE INDEX IF NOT EXISTS "MoodCheckin_userId_createdAt_idx" ON "MoodCheckin"("userId", "createdAt");
+
 CREATE TABLE IF NOT EXISTS "Connection" (
     "id" TEXT NOT NULL DEFAULT gen_random_uuid()::text,
     "status" TEXT NOT NULL DEFAULT 'pending',
@@ -105,5 +128,7 @@ ALTER TABLE "Message" ADD CONSTRAINT "Message_senderId_fkey" FOREIGN KEY ("sende
 ALTER TABLE "Message" ADD CONSTRAINT "Message_receiverId_fkey" FOREIGN KEY ("receiverId") REFERENCES "User"("id") ON DELETE CASCADE ON UPDATE CASCADE;
 ALTER TABLE "GroupMember" ADD CONSTRAINT "GroupMember_userId_fkey" FOREIGN KEY ("userId") REFERENCES "User"("id") ON DELETE CASCADE ON UPDATE CASCADE;
 ALTER TABLE "GroupMember" ADD CONSTRAINT "GroupMember_groupId_fkey" FOREIGN KEY ("groupId") REFERENCES "Group"("id") ON DELETE CASCADE ON UPDATE CASCADE;
+ALTER TABLE "ContentInterest" ADD CONSTRAINT "ContentInterest_userId_fkey" FOREIGN KEY ("userId") REFERENCES "User"("id") ON DELETE CASCADE ON UPDATE CASCADE;
+ALTER TABLE "MoodCheckin" ADD CONSTRAINT "MoodCheckin_userId_fkey" FOREIGN KEY ("userId") REFERENCES "User"("id") ON DELETE CASCADE ON UPDATE CASCADE;
 ALTER TABLE "Connection" ADD CONSTRAINT "Connection_userId_fkey" FOREIGN KEY ("userId") REFERENCES "User"("id") ON DELETE CASCADE ON UPDATE CASCADE;
 ALTER TABLE "Connection" ADD CONSTRAINT "Connection_connectedId_fkey" FOREIGN KEY ("connectedId") REFERENCES "User"("id") ON DELETE CASCADE ON UPDATE CASCADE;

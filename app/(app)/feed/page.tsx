@@ -1,6 +1,7 @@
 'use client'
 
 import { useState, useEffect } from 'react'
+import { MoodCheckin } from '../MoodCheckin'
 
 interface Comment {
   id: string
@@ -177,6 +178,8 @@ export default function FeedPage() {
         <h1 className="view-title">Feed</h1>
         <p className="view-subtitle">Updates from connections and interests</p>
       </div>
+
+      <MoodCheckin />
 
       <div className="compose-box">
         <textarea
