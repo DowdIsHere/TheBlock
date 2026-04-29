@@ -8,8 +8,8 @@ export function MobileNav() {
 
   const tabs = [
     { href: '/feed', icon: '🏠', label: 'Feed' },
+    { href: '/news', icon: '📰', label: 'News' },
     { href: '/discover', icon: '🔍', label: 'Discover' },
-    { href: '/groups', icon: '👥', label: 'Groups' },
     { href: '/messages', icon: '💬', label: 'Messages' },
     { href: '/profile', icon: '👤', label: 'Profile' },
   ]

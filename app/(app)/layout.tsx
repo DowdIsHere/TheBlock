@@ -41,6 +41,10 @@ export default async function AppLayout({
             <span className="icon">🏠</span>
             <span>Feed</span>
           </Link>
+          <Link href="/news" className="nav-item">
+            <span className="icon">📰</span>
+            <span>News</span>
+          </Link>
           <Link href="/discover" className="nav-item">
             <span className="icon">🔍</span>
             <span>Discover</span>

@@ -158,15 +158,30 @@ model MoodCheckin {
 model Connection {
   id          String   @id @default(cuid())
   status      String   @default("pending") // "pending", "accepted", "blocked"
-  
+
   userId      String
   user        User     @relation("UserConnections", fields: [userId], references: [id], onDelete: Cascade)
-  
+
   connectedId String
   connected   User     @relation("ConnectedTo", fields: [connectedId], references: [id], onDelete: Cascade)
-  
+
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
 
   @@unique([userId, connectedId])
+}
+
+model NewsItem {
+  id          String   @id @default(cuid())
+  title       String
+  url         String   @unique
+  summary     String?
+  imageUrl    String?
+  source      String   // human-readable feed name
+  category    String   // "brain" | "mental" | "gut" | "holistic"
+  publishedAt DateTime
+  createdAt   DateTime @default(now())
+
+  @@index([category, publishedAt])
+  @@index([publishedAt])
 }
