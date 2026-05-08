@@ -3,15 +3,17 @@ generator client {
 }
 
 datasource db {
-  provider = "postgresql"
-  url      = env("DATABASE_URL")
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")
+  directUrl = env("DIRECT_URL")
 }
 
 model User {
   id            String    @id @default(cuid())
   email         String    @unique
   password      String
-  name          String
+  firstName     String
+  lastName      String
   avatarUrl     String?
   bio           String?
   
@@ -22,11 +24,15 @@ model User {
   temporalAxis  String?   // "Past", "Present", "Future"
   referenceAxis String?   // "Self", "Balanced", "Other"
   
+  onboardingComplete Boolean @default(false)
+
   createdAt     DateTime  @default(now())
   updatedAt     DateTime  @updatedAt
 
   // Relations
   posts         Post[]
+  interests     ContentInterest[]
+  moodCheckins  MoodCheckin[]
   comments      Comment[]
   likes         Like[]
   sentMessages     Message[] @relation("SentMessages")
@@ -122,6 +128,31 @@ model GroupMember {
   joinedAt  DateTime @default(now())
 
   @@unique([userId, groupId])
+}
+
+model ContentInterest {
+  id        String   @id @default(cuid())
+  city      String   // "architecture", "relations", "assessment", "clinical"
+
+  userId    String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  createdAt DateTime @default(now())
+
+  @@unique([userId, city])
+}
+
+model MoodCheckin {
+  id        String   @id @default(cuid())
+  mood      Int      // 1-5 scale
+  note      String?
+
+  userId    String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  createdAt DateTime @default(now())
+
+  @@index([userId, createdAt])
 }
 
 model Connection {
