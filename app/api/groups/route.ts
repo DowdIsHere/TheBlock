@@ -1,18 +1,12 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { prisma } from '@/lib/prisma'
-import { createClient } from '@/utils/supabase/server'
+import { getSessionUserId } from '@/lib/session'
 
 // GET — list all groups
 export async function GET() {
   try {
-    const supabase = createClient()
-    const { data: { user: supaUser } } = await supabase.auth.getUser()
-    if (!supaUser?.email) {
-      return NextResponse.json({ groups: [] })
-    }
-
-    const dbUser = await prisma.user.findUnique({ where: { email: supaUser.email } })
-    if (!dbUser) {
+    const userId = getSessionUserId()
+    if (!userId) {
       return NextResponse.json({ groups: [] })
     }
 
@@ -21,7 +15,7 @@ export async function GET() {
       include: {
         _count: { select: { members: true, posts: true } },
         members: {
-          where: { userId: dbUser.id },
+          where: { userId },
           select: { role: true },
         }
       }
@@ -50,15 +44,9 @@ export async function GET() {
 // POST — create a group
 export async function POST(request: NextRequest) {
   try {
-    const supabase = createClient()
-    const { data: { user: supaUser } } = await supabase.auth.getUser()
-    if (!supaUser?.email) {
+    const userId = getSessionUserId()
+    if (!userId) {
       return NextResponse.json({ error: 'Not authenticated' }, { status: 401 })
-    }
-
-    const dbUser = await prisma.user.findUnique({ where: { email: supaUser.email } })
-    if (!dbUser) {
-      return NextResponse.json({ error: 'User not found' }, { status: 404 })
     }
 
     const { name, description } = await request.json()
@@ -71,7 +59,7 @@ export async function POST(request: NextRequest) {
         name: name.trim(),
         description: description?.trim() || null,
         members: {
-          create: { userId: dbUser.id, role: 'admin' }
+          create: { userId, role: 'admin' }
         }
       },
       include: {

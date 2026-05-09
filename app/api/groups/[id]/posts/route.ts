@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { prisma } from '@/lib/prisma'
-import { createClient } from '@/utils/supabase/server'
+import { getSessionUserId } from '@/lib/session'
 
 // GET — posts in a group
 export async function GET(
@@ -40,15 +40,9 @@ export async function POST(
   { params }: { params: { id: string } }
 ) {
   try {
-    const supabase = createClient()
-    const { data: { user: supaUser } } = await supabase.auth.getUser()
-    if (!supaUser?.email) {
+    const userId = getSessionUserId()
+    if (!userId) {
       return NextResponse.json({ error: 'Not authenticated' }, { status: 401 })
-    }
-
-    const dbUser = await prisma.user.findUnique({ where: { email: supaUser.email } })
-    if (!dbUser) {
-      return NextResponse.json({ error: 'User not found' }, { status: 404 })
     }
 
     const { content } = await request.json()
@@ -59,7 +53,7 @@ export async function POST(
     const post = await prisma.post.create({
       data: {
         content: content.trim(),
-        authorId: dbUser.id,
+        authorId: userId,
         groupId: params.id,
       },
       include: {

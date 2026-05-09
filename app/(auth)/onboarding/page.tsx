@@ -6,54 +6,35 @@ import { useRouter } from 'next/navigation'
 const CITIES = [
   {
     id: 'architecture',
-    name: 'Architecture City',
+    name: 'How the mind works',
     color: '#2563EB',
     gradient: 'linear-gradient(135deg, #2563EB, #3B82F6)',
-    icon: '\u{1F3DB}',
-    topics: [
-      'Cognition Blocks Intelligence',
-      'Periodic Table of Cognition',
-      'Cognitive Gradients',
-      'Oscillatory Coherence',
-    ],
+    icon: '\u{1F9E0}',
+    blurb: 'Curious about thinking, attention, memory, and what makes us tick. Articles and conversations on cognition.',
   },
   {
     id: 'relations',
-    name: 'Relations City',
+    name: 'People & relationships',
     color: '#7C3AED',
     gradient: 'linear-gradient(135deg, #7C3AED, #A78BFA)',
     icon: '\u{1F91D}',
-    topics: [
-      'MAET Development Framework',
-      'Relationship Framework',
-      'Team Parser Infrastructure',
-    ],
+    blurb: 'Friendships, family, work, communication. How we connect with the people around us.',
   },
   {
     id: 'assessment',
-    name: 'Assessment City',
+    name: 'Know yourself',
     color: '#D97706',
     gradient: 'linear-gradient(135deg, #D97706, #F59E0B)',
-    icon: '\u{1F4CA}',
-    topics: [
-      'Parser Profile',
-      'Human Intelligence Quotient',
-      'Alice-Binet Sync',
-      'Self Assessment',
-    ],
+    icon: '\u{1F50D}',
+    blurb: 'Personality, strengths, blind spots. Quizzes and reflections to learn about yourself.',
   },
   {
     id: 'clinical',
-    name: 'Clinical City',
+    name: 'Mental wellness',
     color: '#059669',
     gradient: 'linear-gradient(135deg, #059669, #34D399)',
-    icon: '\u{1F3E5}',
-    topics: [
-      'CogniMap Clinical Support',
-      'CogniMap Lite',
-      'Cognitive Mitigation',
-      'Brain Area Cards',
-    ],
+    icon: '\u{1F33F}',
+    blurb: 'Anxiety, mood, stress, support. Tools and community for taking care of your mental health.',
   },
 ]
 
@@ -109,9 +90,9 @@ export default function OnboardingPage() {
         <div className="auth-logo">The Cognition Block</div>
         <div className="auth-logo-sub">Let's talk about it...</div>
 
-        <h1 className="auth-title">What interests you?</h1>
+        <h1 className="auth-title">What would you like to talk about?</h1>
         <p className="onboarding-subtitle">
-          Select the areas you'd like to explore. You can always change these later.
+          Pick a few that sound interesting. You can change these any time.
         </p>
 
         {error && <div className="auth-error">{error}</div>}
@@ -141,11 +122,7 @@ export default function OnboardingPage() {
                   </div>
                 </div>
                 <div className="city-card-name">{city.name}</div>
-                <ul className="city-card-topics">
-                  {city.topics.map(topic => (
-                    <li key={topic}>{topic}</li>
-                  ))}
-                </ul>
+                <p className="city-card-blurb">{city.blurb}</p>
               </button>
             )
           })}

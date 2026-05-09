@@ -1,7 +1,7 @@
 import Link from 'next/link'
 import { ThemeToggle } from '../ThemeToggle'
-import { createClient } from '@/utils/supabase/server'
 import { prisma } from '@/lib/prisma'
+import { getSessionUserId } from '@/lib/session'
 import { redirect } from 'next/navigation'
 import { LogoutButton } from './LogoutButton'
 import { MobileNav } from './MobileNav'
@@ -13,15 +13,13 @@ export default async function AppLayout({
 }: {
   children: React.ReactNode
 }) {
-  const supabase = createClient()
-  const { data: { user: supaUser } } = await supabase.auth.getUser()
-
-  if (!supaUser?.email) {
+  const userId = getSessionUserId()
+  if (!userId) {
     redirect('/login')
   }
 
   const user = await prisma.user.findUnique({
-    where: { email: supaUser.email },
+    where: { id: userId },
     select: { id: true, firstName: true, lastName: true, parserName: true }
   })
 
@@ -42,6 +40,10 @@ export default async function AppLayout({
           <Link href="/feed" className="nav-item">
             <span className="icon">🏠</span>
             <span>Feed</span>
+          </Link>
+          <Link href="/news" className="nav-item">
+            <span className="icon">📰</span>
+            <span>News</span>
           </Link>
           <Link href="/discover" className="nav-item">
             <span className="icon">🔍</span>

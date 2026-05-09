@@ -1,17 +1,10 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { prisma } from '@/lib/prisma'
-import { createClient } from '@/utils/supabase/server'
+import { getSessionUserId } from '@/lib/session'
 
 export async function GET() {
   try {
-    const supabase = createClient()
-    const { data: { user: supaUser } } = await supabase.auth.getUser()
-
-    let currentUserId: string | null = null
-    if (supaUser?.email) {
-      const dbUser = await prisma.user.findUnique({ where: { email: supaUser.email } })
-      currentUserId = dbUser?.id || null
-    }
+    const currentUserId = getSessionUserId()
 
     const posts = await prisma.post.findMany({
       where: { groupId: null }, // Only feed posts, not group posts
@@ -43,16 +36,9 @@ export async function GET() {
 
 export async function POST(request: NextRequest) {
   try {
-    const supabase = createClient()
-    const { data: { user: supaUser } } = await supabase.auth.getUser()
-
-    if (!supaUser?.email) {
+    const userId = getSessionUserId()
+    if (!userId) {
       return NextResponse.json({ error: 'Not authenticated' }, { status: 401 })
-    }
-
-    const dbUser = await prisma.user.findUnique({ where: { email: supaUser.email } })
-    if (!dbUser) {
-      return NextResponse.json({ error: 'User not found' }, { status: 404 })
     }
 
     const { content } = await request.json()
@@ -61,7 +47,7 @@ export async function POST(request: NextRequest) {
     }
 
     const post = await prisma.post.create({
-      data: { content: content.trim(), authorId: dbUser.id },
+      data: { content: content.trim(), authorId: userId },
       include: {
         author: {
           select: { id: true, firstName: true, lastName: true, parserName: true, avatarUrl: true }
