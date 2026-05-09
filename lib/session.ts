@@ -4,11 +4,17 @@ import { prisma } from './prisma'
 
 const COOKIE_NAME = 'tcb_session'
 const MAX_AGE_SECONDS = 60 * 60 * 24 * 30 // 30 days
+const MIN_SECRET_LENGTH = 32
 
 function getSecret(): string {
   const secret = process.env.JWT_SECRET || process.env.SESSION_SECRET
   if (!secret) {
     throw new Error('JWT_SECRET (or SESSION_SECRET) must be set')
+  }
+  if (secret.length < MIN_SECRET_LENGTH) {
+    throw new Error(
+      `JWT_SECRET (or SESSION_SECRET) must be at least ${MIN_SECRET_LENGTH} characters long`
+    )
   }
   return secret
 }
