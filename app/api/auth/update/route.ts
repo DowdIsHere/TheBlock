@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { prisma } from '@/lib/prisma'
 import { getSessionUserId } from '@/lib/session'
+import { MAX_LENGTHS } from '@/lib/validation'
 
 export async function PATCH(request: NextRequest) {
   try {
@@ -13,6 +14,12 @@ export async function PATCH(request: NextRequest) {
 
     if (!firstName?.trim() || !lastName?.trim()) {
       return NextResponse.json({ error: 'First name and last name are required' }, { status: 400 })
+    }
+    if (firstName.trim().length > MAX_LENGTHS.name || lastName.trim().length > MAX_LENGTHS.name) {
+      return NextResponse.json({ error: 'Name is too long' }, { status: 400 })
+    }
+    if (typeof bio === 'string' && bio.trim().length > MAX_LENGTHS.bio) {
+      return NextResponse.json({ error: 'Bio is too long' }, { status: 400 })
     }
 
     const user = await prisma.user.update({

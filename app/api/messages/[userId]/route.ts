@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { prisma } from '@/lib/prisma'
 import { getSessionUserId } from '@/lib/session'
+import { MAX_LENGTHS } from '@/lib/validation'
 
 // GET — fetch messages between current user and target user
 export async function GET(
@@ -61,6 +62,22 @@ export async function POST(
     const { content } = await request.json()
     if (!content?.trim()) {
       return NextResponse.json({ error: 'Message is required' }, { status: 400 })
+    }
+    if (content.trim().length > MAX_LENGTHS.message) {
+      return NextResponse.json({ error: 'Message is too long' }, { status: 400 })
+    }
+
+    const blocked = await prisma.connection.findFirst({
+      where: {
+        status: 'blocked',
+        OR: [
+          { userId: currentUserId, connectedId: params.userId },
+          { userId: params.userId, connectedId: currentUserId },
+        ],
+      },
+    })
+    if (blocked) {
+      return NextResponse.json({ error: 'You cannot message this user' }, { status: 403 })
     }
 
     const message = await prisma.message.create({

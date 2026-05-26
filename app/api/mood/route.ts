@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { prisma } from '@/lib/prisma'
 import { getSessionUserId } from '@/lib/session'
+import { MAX_LENGTHS } from '@/lib/validation'
 
 export async function GET() {
   try {
@@ -37,6 +38,9 @@ export async function POST(request: NextRequest) {
     const { mood, note } = await request.json()
     if (!mood || mood < 1 || mood > 5) {
       return NextResponse.json({ error: 'Mood must be 1-5' }, { status: 400 })
+    }
+    if (typeof note === 'string' && note.trim().length > MAX_LENGTHS.moodNote) {
+      return NextResponse.json({ error: 'Note is too long' }, { status: 400 })
     }
 
     const checkin = await prisma.moodCheckin.create({

@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { prisma } from '@/lib/prisma'
 import { getSessionUserId } from '@/lib/session'
+import { MAX_LENGTHS } from '@/lib/validation'
 
 // GET — list all groups
 export async function GET() {
@@ -52,6 +53,12 @@ export async function POST(request: NextRequest) {
     const { name, description } = await request.json()
     if (!name?.trim()) {
       return NextResponse.json({ error: 'Group name is required' }, { status: 400 })
+    }
+    if (name.trim().length > MAX_LENGTHS.groupName) {
+      return NextResponse.json({ error: 'Group name is too long' }, { status: 400 })
+    }
+    if (typeof description === 'string' && description.trim().length > MAX_LENGTHS.groupDescription) {
+      return NextResponse.json({ error: 'Group description is too long' }, { status: 400 })
     }
 
     const group = await prisma.group.create({
