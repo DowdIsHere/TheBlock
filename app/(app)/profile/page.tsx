@@ -48,7 +48,7 @@ export default async function ProfilePage() {
             <div className="profile-name-large">{user.firstName} {user.lastName}</div>
             <div className="profile-parser-tag">{user.parserName || 'Parser not yet set'}</div>
             <div className="profile-bio">
-              {user.bio || 'Complete the CogniMap assessment to discover your cognitive architecture and Parser Profile.'}
+              {user.bio || 'Take the CogniMap assessment to surface your cognitive architecture and unlock your Parser Profile.'}
             </div>
             <div className="profile-stats">
               <div>
@@ -69,21 +69,20 @@ export default async function ProfilePage() {
       </div>
 
       <div className="view-header">
-        <h2 className="view-title" style={{fontSize: '1.2rem'}}>Recent Posts</h2>
+        <h2 className="view-title" style={{fontSize: '1.45rem'}}>Recent posts</h2>
       </div>
 
       {user.posts.length === 0 ? (
-        <div style={{
-          textAlign: 'center',
-          padding: '48px 20px',
-          color: 'var(--text-muted)',
-          fontSize: '0.9rem'
-        }}>
-          No posts yet. Share your first thought with the community.
+        <div className="empty-state">
+          <div className="empty-state-icon" aria-hidden="true">✎</div>
+          <div className="empty-state-title">Nothing posted yet</div>
+          <p className="empty-state-body">
+            Your first post sets the tone for who finds you. Drop a question, a field note, or what you&apos;re working on.
+          </p>
         </div>
       ) : (
         user.posts.map(post => (
-          <div key={post.id} className="post-card">
+          <article key={post.id} className="post-card">
             <div className="post-header">
               <div className="post-avatar">{initials}</div>
               <div>
@@ -94,12 +93,31 @@ export default async function ProfilePage() {
               </div>
             </div>
             <div className="post-content">{post.content}</div>
-            <div className="post-actions">
-              <button className="post-action">👍 {post._count.likes || ''}</button>
-              <button className="post-action">💬 {post._count.comments || ''}</button>
-              <button className="post-action">🔗 Share</button>
+            <div className="post-actions" role="group" aria-label="Post reactions">
+              <button className="post-action" data-react="like">
+                <span aria-hidden="true">👍</span>
+                <span>Like</span>
+                {post._count.likes > 0 && (
+                  <span style={{ fontFamily: "'IBM Plex Mono', monospace", fontSize: '0.74rem', opacity: 0.75 }}>
+                    {post._count.likes}
+                  </span>
+                )}
+              </button>
+              <button className="post-action" data-react="comment">
+                <span aria-hidden="true">💬</span>
+                <span>Comment</span>
+                {post._count.comments > 0 && (
+                  <span style={{ fontFamily: "'IBM Plex Mono', monospace", fontSize: '0.74rem', opacity: 0.75 }}>
+                    {post._count.comments}
+                  </span>
+                )}
+              </button>
+              <button className="post-action" data-react="share">
+                <span aria-hidden="true">↗</span>
+                <span>Share</span>
+              </button>
             </div>
-          </div>
+          </article>
         ))
       )}
     </>

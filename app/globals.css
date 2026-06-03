@@ -1,72 +1,82 @@
-@import url('https://fonts.googleapis.com/css2?family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;0,8..60,700;1,8..60,400&family=IBM+Plex+Sans:wght@300;400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Source+Code+Pro:wght@400;500;600;700&display=swap');
 
 /* ===========================
    CBI Design System — Light Mode (Default)
    =========================== */
 
 :root, html.light {
-  /* Blue trust palette */
-  --blue-900: #0C2340;
-  --blue-700: #1B3A5C;
-  --blue-600: #1E4D78;
-  --blue-500: #2563EB;
-  --blue-400: #3B82F6;
-  --blue-100: #DBEAFE;
-  --blue-50: #EFF6FF;
+  /* Stripe violet ramp — primary brand anchor (mapped onto the legacy
+     "blue" token names so the whole app re-skins through the cascade) */
+  --blue-900: #1C1E54;  /* brand dark indigo — immersive sections */
+  --blue-700: #2E2B8C;  /* purple deep — icon hover, deep accents */
+  --blue-600: #4434D4;  /* purple hover */
+  --blue-500: #533AFD;  /* Stripe Purple — primary CTA / interactive */
+  --blue-400: #665EFD;  /* purple mid — range / soft highlight */
+  --blue-100: #D6D9FC;  /* soft purple — tinted surfaces / borders */
+  --blue-50:  #F3F2FF;  /* lavender wash — subtle accent fills */
 
-  /* Neutrals */
-  --slate-900: #1A1A2E;
-  --slate-700: #334155;
-  --slate-500: #64748B;
-  --slate-300: #CBD5E1;
-  --slate-100: #F1F5F9;
+  /* Neutrals — deep navy headings, slate body, cool-pale surfaces */
+  --slate-900: #061B31;  /* deep navy — never pure black */
+  --slate-700: #273951;  /* dark slate — labels, sub-headings */
+  --slate-500: #64748D;  /* slate — body, captions, placeholders */
+  --slate-300: #D6DEE8;
+  --slate-100: #F6F9FC;  /* cool-pale blue — nested panels */
   --white: #FFFFFF;
 
-  /* Accent — CVD safe */
-  --amber-500: #D97706;
-  --amber-400: #F59E0B;
-  --green-600: #059669;
+  /* Accent — warm/status (decorative, not interactive) */
+  --amber-500: #9B6829;  /* lemon — warning / highlight */
+  --amber-400: #D97706;
+  --green-600: #15BE53;  /* Stripe success green */
 
   /* Semantic */
-  --text-primary: #1A1A2E;
-  --text-secondary: #334155;
-  --text-muted: #64748B;
+  --text-primary: #061B31;
+  --text-secondary: #51607A;
+  --text-muted: #64748D;
 
-  --bg-page: #F7F8FA;
+  --bg-page: #F6F9FC;
   --bg-card: #FFFFFF;
-  --bg-inset: #F1F5F9;
+  --bg-inset: #EFF3F8;
 
-  --border: rgba(0, 0, 0, 0.08);
-  --border-strong: rgba(0, 0, 0, 0.14);
+  --border: #E5EDF5;
+  --border-strong: #D6DEE8;
 
-  --shadow-sm: 0 1px 3px rgba(0,0,0,0.06);
-  --shadow-md: 0 4px 12px rgba(0,0,0,0.08);
-  --shadow-lg: 0 8px 24px rgba(0,0,0,0.1);
+  /* Chromatic depth — Stripe's signature blue-tinted multi-layer shadows */
+  --shadow-sm: rgba(50,50,93,0.08) 0px 2px 5px -1px, rgba(0,0,0,0.04) 0px 1px 3px -1px;
+  --shadow-md: rgba(50,50,93,0.12) 0px 8px 16px -4px, rgba(0,0,0,0.06) 0px 3px 8px -3px;
+  --shadow-lg: rgba(50,50,93,0.25) 0px 30px 45px -30px, rgba(0,0,0,0.10) 0px 18px 36px -18px;
+  --shadow-xl: rgba(3,3,39,0.25) 0px 28px 50px -16px, rgba(0,0,0,0.12) 0px 14px 28px -12px;
+  --ring-inner: inset 0 0 0 1px rgba(255, 255, 255, 0.6);
+
+  /* Reaction palette — purple anchor + ruby/lemon/green accents */
+  --react-like: #533AFD;
+  --react-love: #EA2261;
+  --react-laugh: #9B6829;
+  --react-celebrate: #15BE53;
 
   /* Status tags */
-  --status-preserved-bg: #ECFDF5;
-  --status-preserved-text: #059669;
-  --status-compromised-bg: #FEF2F2;
-  --status-compromised-text: #DC2626;
-  --status-partial-bg: #FFFBEB;
-  --status-partial-text: #D97706;
-  --status-info-bg: #EFF6FF;
-  --status-info-text: #2563EB;
+  --status-preserved-bg: #ECFDF3;
+  --status-preserved-text: #108C3D;
+  --status-compromised-bg: #FDF2F5;
+  --status-compromised-text: #EA2261;
+  --status-partial-bg: #FBF6EE;
+  --status-partial-text: #9B6829;
+  --status-info-bg: #F3F2FF;
+  --status-info-text: #533AFD;
 
   /* Data visualization */
-  --bar-track: #E2E8F0;
-  --bar-high: #059669;
-  --bar-med: #D97706;
-  --bar-low: #DC2626;
+  --bar-track: #E5EDF5;
+  --bar-high: #15BE53;
+  --bar-med: #9B6829;
+  --bar-low: #EA2261;
 
   /* Header */
-  --header-bg: rgba(255, 255, 255, 0.92);
+  --header-bg: rgba(255, 255, 255, 0.85);
 
-  /* Hero */
-  --hero-grad: linear-gradient(175deg, #0C2340 0%, #1B3A5C 60%, #1E4D78 100%);
+  /* Hero — deep brand indigo into signature violet */
+  --hero-grad: linear-gradient(135deg, #1C1E54 0%, #2E2B8C 55%, #533AFD 115%);
 
-  /* Focus glow */
-  --focus-ring: 0 0 0 3px rgba(37,99,235,0.1);
+  /* Focus glow — layered purple halo */
+  --focus-ring: 0 0 0 3px rgba(83, 58, 253, 0.22);
 }
 
 /* ===========================
@@ -75,116 +85,128 @@
 
 @media (prefers-color-scheme: dark) {
   :root:not(.light) {
-    --blue-900: #060B18;
-    --blue-700: #0C1A30;
-    --blue-600: #0F2240;
-    --blue-500: #3B82F6;
-    --blue-400: #60A5FA;
-    --blue-100: rgba(219, 234, 254, 0.15);
-    --blue-50: rgba(239, 246, 255, 0.06);
+    --blue-900: #14163D;
+    --blue-700: #2E2B8C;
+    --blue-600: #6F61FF;
+    --blue-500: #7C6CFF;
+    --blue-400: #9387FF;
+    --blue-100: rgba(124, 108, 255, 0.18);
+    --blue-50: rgba(124, 108, 255, 0.08);
 
-    --slate-900: #E8EAF0;
-    --slate-700: #A0A8BC;
-    --slate-500: #6B7394;
-    --slate-300: rgba(255, 255, 255, 0.1);
-    --slate-100: #141722;
-    --white: #1A1D2E;
+    --slate-900: #EEF1F8;
+    --slate-700: #B4BCD0;
+    --slate-500: #828DA8;
+    --slate-300: rgba(255, 255, 255, 0.12);
+    --slate-100: #12152B;
+    --white: #161A36;
 
-    --amber-500: #FBBF24;
-    --amber-400: #F59E0B;
-    --green-600: #34D399;
+    --amber-500: #E0A458;
+    --amber-400: #F0B868;
+    --green-600: #2BD96B;
 
-    --text-primary: #E8EAF0;
-    --text-secondary: #A0A8BC;
-    --text-muted: #6B7394;
+    --text-primary: #EEF1F8;
+    --text-secondary: #B4BCD0;
+    --text-muted: #828DA8;
 
-    --bg-page: #0F1117;
-    --bg-card: #1A1D2E;
-    --bg-inset: #141722;
+    --bg-page: #0A0D1F;
+    --bg-card: #161A36;
+    --bg-inset: #11142B;
 
-    --border: rgba(255, 255, 255, 0.06);
-    --border-strong: rgba(255, 255, 255, 0.12);
+    --border: rgba(255, 255, 255, 0.08);
+    --border-strong: rgba(255, 255, 255, 0.14);
 
-    --shadow-sm: 0 1px 3px rgba(0,0,0,0.3);
-    --shadow-md: 0 4px 16px rgba(0,0,0,0.4);
-    --shadow-lg: 0 8px 24px rgba(0,0,0,0.5);
+    --shadow-sm: rgba(0,0,0,0.40) 0px 2px 5px -1px, rgba(3,3,39,0.40) 0px 1px 3px -1px;
+    --shadow-md: rgba(0,0,0,0.45) 0px 8px 16px -4px, rgba(3,3,39,0.40) 0px 3px 8px -3px;
+    --shadow-lg: rgba(3,3,39,0.55) 0px 30px 45px -28px, rgba(0,0,0,0.50) 0px 18px 36px -18px;
+    --shadow-xl: rgba(3,3,39,0.60) 0px 28px 50px -16px, rgba(0,0,0,0.55) 0px 14px 28px -12px;
+    --ring-inner: inset 0 0 0 1px rgba(255,255,255,0.05);
+    --react-like: #9387FF;
+    --react-love: #FB5A8A;
+    --react-laugh: #E0A458;
+    --react-celebrate: #2BD96B;
 
-    --status-preserved-bg: rgba(5, 150, 105, 0.12);
-    --status-preserved-text: #34D399;
-    --status-compromised-bg: rgba(220, 38, 38, 0.12);
-    --status-compromised-text: #F87171;
-    --status-partial-bg: rgba(217, 119, 6, 0.12);
-    --status-partial-text: #FBBF24;
-    --status-info-bg: rgba(37, 99, 235, 0.12);
-    --status-info-text: #60A5FA;
+    --status-preserved-bg: rgba(21, 190, 83, 0.14);
+    --status-preserved-text: #43E07E;
+    --status-compromised-bg: rgba(234, 34, 97, 0.14);
+    --status-compromised-text: #FB5A8A;
+    --status-partial-bg: rgba(155, 104, 41, 0.18);
+    --status-partial-text: #E0A458;
+    --status-info-bg: rgba(124, 108, 255, 0.14);
+    --status-info-text: #9387FF;
 
-    --bar-track: rgba(255, 255, 255, 0.08);
-    --bar-high: #34D399;
-    --bar-med: #FBBF24;
-    --bar-low: #F87171;
+    --bar-track: rgba(255, 255, 255, 0.10);
+    --bar-high: #2BD96B;
+    --bar-med: #E0A458;
+    --bar-low: #FB5A8A;
 
-    --header-bg: rgba(26, 29, 46, 0.92);
+    --header-bg: rgba(22, 26, 54, 0.85);
 
-    --hero-grad: linear-gradient(175deg, #060B18 0%, #0C1A30 60%, #0F2240 100%);
+    --hero-grad: linear-gradient(135deg, #14163D 0%, #2E2B8C 55%, #533AFD 120%);
 
-    --focus-ring: 0 0 0 3px rgba(59,130,246,0.15);
+    --focus-ring: 0 0 0 3px rgba(124, 108, 255, 0.30);
   }
 }
 
 html.dark {
-  --blue-900: #060B18;
-  --blue-700: #0C1A30;
-  --blue-600: #0F2240;
-  --blue-500: #3B82F6;
-  --blue-400: #60A5FA;
-  --blue-100: rgba(219, 234, 254, 0.15);
-  --blue-50: rgba(239, 246, 255, 0.06);
+  --blue-900: #14163D;
+  --blue-700: #2E2B8C;
+  --blue-600: #6F61FF;
+  --blue-500: #7C6CFF;
+  --blue-400: #9387FF;
+  --blue-100: rgba(124, 108, 255, 0.18);
+  --blue-50: rgba(124, 108, 255, 0.08);
 
-  --slate-900: #E8EAF0;
-  --slate-700: #A0A8BC;
-  --slate-500: #6B7394;
-  --slate-300: rgba(255, 255, 255, 0.1);
-  --slate-100: #141722;
-  --white: #1A1D2E;
+  --slate-900: #EEF1F8;
+  --slate-700: #B4BCD0;
+  --slate-500: #828DA8;
+  --slate-300: rgba(255, 255, 255, 0.12);
+  --slate-100: #12152B;
+  --white: #161A36;
 
-  --amber-500: #FBBF24;
-  --amber-400: #F59E0B;
-  --green-600: #34D399;
+  --amber-500: #E0A458;
+  --amber-400: #F0B868;
+  --green-600: #2BD96B;
 
-  --text-primary: #E8EAF0;
-  --text-secondary: #A0A8BC;
-  --text-muted: #6B7394;
+  --text-primary: #EEF1F8;
+  --text-secondary: #B4BCD0;
+  --text-muted: #828DA8;
 
-  --bg-page: #0F1117;
-  --bg-card: #1A1D2E;
-  --bg-inset: #141722;
+  --bg-page: #0A0D1F;
+  --bg-card: #161A36;
+  --bg-inset: #11142B;
 
-  --border: rgba(255, 255, 255, 0.06);
-  --border-strong: rgba(255, 255, 255, 0.12);
+  --border: rgba(255, 255, 255, 0.08);
+  --border-strong: rgba(255, 255, 255, 0.14);
 
-  --shadow-sm: 0 1px 3px rgba(0,0,0,0.3);
-  --shadow-md: 0 4px 16px rgba(0,0,0,0.4);
-  --shadow-lg: 0 8px 24px rgba(0,0,0,0.5);
+  --shadow-sm: rgba(0,0,0,0.40) 0px 2px 5px -1px, rgba(3,3,39,0.40) 0px 1px 3px -1px;
+  --shadow-md: rgba(0,0,0,0.45) 0px 8px 16px -4px, rgba(3,3,39,0.40) 0px 3px 8px -3px;
+  --shadow-lg: rgba(3,3,39,0.55) 0px 30px 45px -28px, rgba(0,0,0,0.50) 0px 18px 36px -18px;
+  --shadow-xl: rgba(3,3,39,0.60) 0px 28px 50px -16px, rgba(0,0,0,0.55) 0px 14px 28px -12px;
+  --ring-inner: inset 0 0 0 1px rgba(255,255,255,0.05);
+  --react-like: #9387FF;
+  --react-love: #FB5A8A;
+  --react-laugh: #E0A458;
+  --react-celebrate: #2BD96B;
 
-  --status-preserved-bg: rgba(5, 150, 105, 0.12);
-  --status-preserved-text: #34D399;
-  --status-compromised-bg: rgba(220, 38, 38, 0.12);
-  --status-compromised-text: #F87171;
-  --status-partial-bg: rgba(217, 119, 6, 0.12);
-  --status-partial-text: #FBBF24;
-  --status-info-bg: rgba(37, 99, 235, 0.12);
-  --status-info-text: #60A5FA;
+  --status-preserved-bg: rgba(21, 190, 83, 0.14);
+  --status-preserved-text: #43E07E;
+  --status-compromised-bg: rgba(234, 34, 97, 0.14);
+  --status-compromised-text: #FB5A8A;
+  --status-partial-bg: rgba(155, 104, 41, 0.18);
+  --status-partial-text: #E0A458;
+  --status-info-bg: rgba(124, 108, 255, 0.14);
+  --status-info-text: #9387FF;
 
-  --bar-track: rgba(255, 255, 255, 0.08);
-  --bar-high: #34D399;
-  --bar-med: #FBBF24;
-  --bar-low: #F87171;
+  --bar-track: rgba(255, 255, 255, 0.10);
+  --bar-high: #2BD96B;
+  --bar-med: #E0A458;
+  --bar-low: #FB5A8A;
 
-  --header-bg: rgba(26, 29, 46, 0.92);
+  --header-bg: rgba(22, 26, 54, 0.85);
 
-  --hero-grad: linear-gradient(175deg, #060B18 0%, #0C1A30 60%, #0F2240 100%);
+  --hero-grad: linear-gradient(135deg, #14163D 0%, #2E2B8C 55%, #533AFD 120%);
 
-  --focus-ring: 0 0 0 3px rgba(59,130,246,0.15);
+  --focus-ring: 0 0 0 3px rgba(124, 108, 255, 0.30);
 }
 
 /* Cognitive Block Accent Colors — same in both modes */
@@ -192,7 +214,7 @@ html.dark {
   --accent-spatial: #0D9488;
   --accent-temporal: #D97706;
   --accent-perceptual: #7C3AED;
-  --accent-pattern: #2563EB;
+  --accent-pattern: #533AFD;
   --accent-symbolic: #DC2626;
   --accent-social: #DB2777;
   --accent-self: #059669;
@@ -220,15 +242,92 @@ body, .card, .sidebar-left, .sidebar-right,
 }
 
 body {
-  font-family: 'IBM Plex Sans', system-ui, sans-serif;
+  font-family: 'Inter', 'Söhne', 'SF Pro Display', -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
   background: var(--bg-page);
   color: var(--text-primary);
-  min-height: 100vh;
+  min-height: 100dvh;
   line-height: 1.6;
   font-size: 1rem;
-  letter-spacing: 0.01em;
+  letter-spacing: -0.005em;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  font-feature-settings: 'cv11', 'ss01', 'ss03';
+  scroll-behavior: smooth;
+  text-rendering: optimizeLegibility;
+}
+
+/* Ambient page texture — breaks digital flatness without dominating */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+  background-image:
+    radial-gradient(at 12% -10%, rgba(83, 58, 253, 0.07) 0%, transparent 45%),
+    radial-gradient(at 90% 8%, rgba(124, 58, 237, 0.05) 0%, transparent 40%),
+    radial-gradient(at 50% 110%, rgba(13, 148, 136, 0.05) 0%, transparent 50%);
+}
+
+html.dark body::before {
+  background-image:
+    radial-gradient(at 12% -10%, rgba(124, 108, 255, 0.10) 0%, transparent 45%),
+    radial-gradient(at 90% 8%, rgba(124, 58, 237, 0.08) 0%, transparent 40%),
+    radial-gradient(at 50% 110%, rgba(13, 148, 136, 0.06) 0%, transparent 50%);
+}
+
+/* Fine-grain noise overlay — adds tactile depth to dead-flat surfaces */
+body::after {
+  content: '';
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+  opacity: 0.035;
+  mix-blend-mode: overlay;
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='180' height='180'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.6 0'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>");
+}
+
+html.dark body::after {
+  opacity: 0.06;
+  mix-blend-mode: screen;
+}
+
+.app-layout, .auth-page, .onboarding-card {
+  position: relative;
+  z-index: 1;
+}
+
+/* Tabular numerals across data-heavy mono blocks */
+.post-meta, .logo-sub, .user-parser, .nav-label, .match-parser,
+.match-score, .group-members, .trend-category, .trend-count,
+.discovery-parser, .conv-time, .profile-stat-label, .profile-stat-value,
+.profile-parser-tag, .status-tag, .auth-logo-sub, .mood-label,
+.compat-text, .news-card-tag, .news-card-meta {
+  font-variant-numeric: tabular-nums;
+  font-feature-settings: 'tnum';
+}
+
+/* Skip-to-content (a11y) */
+.skip-link {
+  position: absolute;
+  top: -40px;
+  left: 12px;
+  background: var(--blue-500);
+  color: #fff;
+  padding: 8px 14px;
+  border-radius: 8px;
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 0.85rem;
+  z-index: 10000;
+  transition: top 0.18s ease;
+}
+
+.skip-link:focus {
+  top: 12px;
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(83, 58, 253, 0.35);
 }
 
 /* ===========================
@@ -237,8 +336,11 @@ body {
 
 .app-layout {
   display: grid;
-  grid-template-columns: 240px 1fr 300px;
-  min-height: 100vh;
+  grid-template-columns: 260px 1fr 320px;
+  min-height: 100dvh;
+  max-width: 1480px;
+  margin: 0 auto;
+  gap: 0;
 }
 
 /* ===========================
@@ -248,25 +350,29 @@ body {
 .sidebar-left {
   background: var(--bg-card);
   border-right: 1px solid var(--border);
-  padding: 24px 16px 20px;
+  padding: 28px 18px 22px;
   position: sticky;
   top: 0;
-  height: 100vh;
+  height: 100dvh;
   display: flex;
   flex-direction: column;
   overflow-y: auto;
+  backdrop-filter: saturate(140%);
 }
 
 .logo {
-  font-family: 'Source Serif 4', Georgia, serif;
-  font-size: 1.1rem;
-  font-weight: 700;
+  font-family: 'Inter', 'Söhne', 'SF Pro Display', -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
+  font-size: 1.2rem;
+  font-weight: 600;
+  letter-spacing: -0.022em;
+  font-feature-settings: 'ss01';
   color: var(--text-primary);
   margin-bottom: 2px;
+  text-wrap: balance;
 }
 
 .logo-sub {
-  font-family: 'IBM Plex Mono', monospace;
+  font-family: 'Source Code Pro', ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
   font-size: 0.6rem;
   text-transform: uppercase;
   letter-spacing: 0.15em;
@@ -279,7 +385,7 @@ body {
 }
 
 .nav-label {
-  font-family: 'IBM Plex Mono', monospace;
+  font-family: 'Source Code Pro', ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
   font-size: 0.65rem;
   font-weight: 500;
   text-transform: uppercase;
@@ -292,24 +398,49 @@ body {
 .nav-item {
   display: flex;
   align-items: center;
-  gap: 10px;
-  padding: 10px 12px;
+  gap: 12px;
+  padding: 11px 14px;
   border-radius: 8px;
-  color: var(--text-muted);
-  font-size: 0.85rem;
+  color: var(--text-secondary);
+  font-family: 'Inter', 'Söhne', 'SF Pro Display', -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
+  font-size: 0.92rem;
   font-weight: 500;
+  letter-spacing: -0.005em;
   cursor: pointer;
   text-decoration: none;
+  position: relative;
+  transition: background-color 0.16s ease,
+              color 0.16s ease,
+              transform 0.16s cubic-bezier(.2,.8,.2,1);
 }
 
 .nav-item:hover {
   background: var(--bg-inset);
-  color: var(--blue-500);
+  color: var(--text-primary);
+  transform: translateX(2px);
+}
+
+.nav-item:active {
+  transform: translateX(2px) scale(0.98);
 }
 
 .nav-item.active {
   background: var(--status-info-bg);
   color: var(--blue-500);
+  font-weight: 600;
+}
+
+.nav-item.active::before {
+  content: '';
+  position: absolute;
+  left: -18px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 3px;
+  height: 22px;
+  border-radius: 0 3px 3px 0;
+  background: var(--blue-500);
+  box-shadow: 0 0 12px rgba(83, 58, 253, 0.4);
 }
 
 .nav-item .icon {
@@ -322,7 +453,7 @@ body {
   margin-left: auto;
   background: var(--blue-500);
   color: #FFFFFF;
-  font-family: 'IBM Plex Mono', monospace;
+  font-family: 'Source Code Pro', ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
   font-size: 0.65rem;
   font-weight: 600;
   padding: 2px 7px;
@@ -364,7 +495,7 @@ body {
   padding: 12px;
   background: var(--bg-inset);
   border: 1px solid var(--border);
-  border-radius: 12px;
+  border-radius: 8px;
   cursor: pointer;
   text-decoration: none;
   color: inherit;
@@ -377,16 +508,20 @@ body {
 .avatar {
   width: 36px;
   height: 36px;
-  border-radius: 50%;
-  background: linear-gradient(135deg, var(--blue-500), var(--accent-perceptual));
+  border-radius: 14px;
+  background:
+    radial-gradient(120% 120% at 25% 15%, rgba(255,255,255,0.18) 0%, transparent 55%),
+    var(--blue-700);
   display: flex;
   align-items: center;
   justify-content: center;
-  font-family: 'IBM Plex Sans', system-ui, sans-serif;
+  font-family: 'Inter', 'Söhne', 'SF Pro Display', -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
   font-weight: 600;
-  font-size: 0.8rem;
+  font-size: 0.78rem;
+  letter-spacing: -0.01em;
   color: #FFFFFF;
   flex-shrink: 0;
+  box-shadow: var(--shadow-sm), inset 0 0 0 1px rgba(255,255,255,0.08);
 }
 
 .user-name {
@@ -396,7 +531,7 @@ body {
 }
 
 .user-parser {
-  font-family: 'IBM Plex Mono', monospace;
+  font-family: 'Source Code Pro', ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
   font-size: 0.65rem;
   color: var(--text-muted);
 }
@@ -407,27 +542,36 @@ body {
 
 .main-content {
   padding: 28px 24px;
-  max-height: 100vh;
+  max-height: 100dvh;
   overflow-y: auto;
   max-width: 100%;
 }
 
 .view-header {
-  margin-bottom: 24px;
+  margin-bottom: 28px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
 }
 
 .view-title {
-  font-family: 'Source Serif 4', Georgia, serif;
-  font-size: clamp(1.5rem, 3vw, 2rem);
-  font-weight: 700;
-  line-height: 1.2;
-  margin-bottom: 4px;
+  font-family: 'Inter', 'Söhne', 'SF Pro Display', -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
+  font-size: clamp(1.875rem, 3.2vw, 2.75rem);
+  font-weight: 300;
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+  font-feature-settings: 'ss01';
+  margin: 0;
   color: var(--text-primary);
+  text-wrap: balance;
 }
 
 .view-subtitle {
   color: var(--text-muted);
-  font-size: 0.9rem;
+  font-size: 0.95rem;
+  max-width: 60ch;
+  line-height: 1.5;
+  text-wrap: pretty;
 }
 
 /* ===========================
@@ -437,7 +581,7 @@ body {
 .card {
   background: var(--bg-card);
   border: 1px solid var(--border);
-  border-radius: 12px;
+  border-radius: 8px;
   padding: 20px;
   margin-bottom: 16px;
   box-shadow: var(--shadow-sm);
@@ -455,30 +599,35 @@ body {
 .compose-box {
   background: var(--bg-card);
   border: 1px solid var(--border);
-  border-radius: 12px;
-  padding: 16px;
-  margin-bottom: 20px;
+  border-radius: 10px;
+  padding: 20px;
+  margin-bottom: 22px;
   box-shadow: var(--shadow-sm);
+  transition: border-color 0.18s ease, box-shadow 0.22s ease;
+}
+
+.compose-box:focus-within {
+  border-color: var(--blue-500);
+  box-shadow: var(--focus-ring), var(--shadow-md);
 }
 
 .compose-input {
   width: 100%;
-  background: var(--bg-inset);
-  border: 1px solid var(--border);
-  border-radius: 8px;
-  padding: 12px 14px;
+  background: transparent;
+  border: none;
+  border-radius: 10px;
+  padding: 6px 4px;
   color: var(--text-primary);
-  font-family: 'IBM Plex Sans', system-ui, sans-serif;
-  font-size: 0.9rem;
+  font-family: 'Inter', 'Söhne', 'SF Pro Display', -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
+  font-size: 1.02rem;
   resize: none;
-  min-height: 80px;
-  line-height: 1.6;
+  min-height: 84px;
+  line-height: 1.55;
+  letter-spacing: -0.005em;
 }
 
 .compose-input:focus {
   outline: none;
-  border-color: var(--blue-500);
-  box-shadow: var(--focus-ring);
 }
 
 .compose-input::placeholder {
@@ -522,40 +671,83 @@ body {
    =========================== */
 
 .btn {
-  font-family: 'IBM Plex Sans', system-ui, sans-serif;
-  padding: 10px 20px;
-  border-radius: 8px;
-  font-size: 0.875rem;
-  font-weight: 600;
+  font-family: 'Inter', 'Söhne', 'SF Pro Display', -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
+  padding: 9px 18px;
+  border-radius: 6px;
+  font-size: 0.9375rem;
+  font-weight: 500;
+  letter-spacing: -0.003em;
+  font-feature-settings: 'ss01';
   cursor: pointer;
-  border: none;
+  border: 1px solid transparent;
+  /* Stripe transitions colour + shadow only — buttons never nudge or scale */
+  transition: box-shadow 0.2s ease,
+              background-color 0.18s ease,
+              border-color 0.18s ease,
+              color 0.18s ease;
+  position: relative;
+  isolation: isolate;
+}
+
+.btn:focus-visible {
+  outline: none;
+  box-shadow: var(--focus-ring);
+}
+
+.btn:disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
 }
 
 .btn-primary {
   background: var(--blue-500);
   color: #FFFFFF;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  box-shadow:
+    rgba(50, 50, 93, 0.18) 0px 2px 5px -1px,
+    rgba(0, 0, 0, 0.10) 0px 1px 3px -1px;
 }
 
 .btn-primary:hover {
-  transform: translateY(-1px);
-  box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+  background: var(--blue-600);
+  box-shadow:
+    rgba(50, 50, 93, 0.22) 0px 6px 14px -2px,
+    rgba(0, 0, 0, 0.12) 0px 3px 7px -3px;
+}
+
+.btn-primary:active {
+  background: var(--blue-700);
+  box-shadow: rgba(50, 50, 93, 0.20) 0px 1px 2px 0px;
 }
 
 .btn-secondary {
-  background: var(--bg-inset);
+  background: var(--bg-card);
   color: var(--text-primary);
-  border: 1px solid var(--border);
+  border: 1px solid var(--border-strong);
+  box-shadow: var(--shadow-sm);
 }
 
 .btn-secondary:hover {
-  background: var(--bg-card);
-  border-color: var(--border-strong);
+  background: var(--bg-inset);
+  border-color: var(--blue-500);
+  color: var(--blue-500);
+  box-shadow: var(--shadow-md);
 }
 
 .btn-secondary:disabled {
-  opacity: 0.6;
+  opacity: 0.55;
   cursor: not-allowed;
+}
+
+/* Ghost / outlined — Stripe's secondary action: violet text, soft lavender edge */
+.btn-ghost {
+  background: transparent;
+  color: var(--blue-500);
+  border: 1px solid transparent;
+}
+
+.btn-ghost:hover {
+  background: var(--blue-50);
+  color: var(--blue-600);
 }
 
 /* ===========================
@@ -565,83 +757,150 @@ body {
 .post-card {
   background: var(--bg-card);
   border: 1px solid var(--border);
-  border-radius: 12px;
-  margin-bottom: 16px;
+  border-radius: 10px;
+  margin-bottom: 18px;
   box-shadow: var(--shadow-sm);
+  position: relative;
+  overflow: hidden;
+  transition: border-color 0.2s ease,
+              box-shadow 0.22s ease,
+              transform 0.22s cubic-bezier(.2,.8,.2,1);
+}
+
+.post-card::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  pointer-events: none;
+  background: radial-gradient(
+    600px circle at var(--mx, 50%) var(--my, 0%),
+    rgba(83, 58, 253, 0.07),
+    transparent 40%
+  );
+  opacity: 0;
+  transition: opacity 0.25s ease;
 }
 
 .post-card:hover {
   border-color: var(--border-strong);
   box-shadow: var(--shadow-md);
+  transform: translateY(-2px);
+}
+
+.post-card:hover::before {
+  opacity: 1;
 }
 
 .post-header {
   display: flex;
   align-items: center;
-  gap: 12px;
-  padding: 16px 16px 12px;
+  gap: 14px;
+  padding: 18px 20px 14px;
 }
 
 .post-avatar {
-  width: 40px;
-  height: 40px;
-  border-radius: 50%;
-  background: linear-gradient(135deg, var(--amber-400), var(--accent-perceptual));
+  width: 44px;
+  height: 44px;
+  border-radius: 16px;
+  background:
+    radial-gradient(120% 120% at 25% 15%, rgba(255,255,255,0.16) 0%, transparent 55%),
+    var(--blue-600);
   display: flex;
   align-items: center;
   justify-content: center;
+  font-family: 'Inter', 'Söhne', 'SF Pro Display', -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
   font-weight: 600;
-  font-size: 0.8rem;
+  font-size: 0.85rem;
+  letter-spacing: -0.01em;
   color: #FFFFFF;
   flex-shrink: 0;
+  box-shadow: var(--shadow-sm), inset 0 0 0 1px rgba(255,255,255,0.08);
+  transition: transform 0.18s cubic-bezier(.2,.8,.2,1), box-shadow 0.18s ease;
+}
+
+.post-card:hover .post-avatar {
+  transform: rotate(-2deg) scale(1.02);
+  box-shadow: var(--shadow-md), inset 0 0 0 1px rgba(255,255,255,0.12);
 }
 
 .post-author {
-  font-family: 'Source Serif 4', Georgia, serif;
+  font-family: 'Inter', 'Söhne', 'SF Pro Display', -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
   font-weight: 600;
   font-size: 0.95rem;
   color: var(--text-primary);
 }
 
 .post-meta {
-  font-family: 'IBM Plex Mono', monospace;
+  font-family: 'Source Code Pro', ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
   font-size: 0.7rem;
   color: var(--text-muted);
 }
 
 .post-content {
-  padding: 0 16px 16px;
-  font-size: 1rem;
-  line-height: 1.6;
-  color: var(--text-secondary);
-  max-width: 68ch;
+  padding: 0 20px 18px;
+  font-size: 1.02rem;
+  line-height: 1.65;
+  color: var(--text-primary);
+  max-width: 65ch;
+  text-wrap: pretty;
+  letter-spacing: -0.005em;
 }
 
 .post-actions {
   display: flex;
-  gap: 4px;
-  padding: 12px 16px;
+  gap: 2px;
+  padding: 10px 14px;
   border-top: 1px solid var(--border);
+  background: linear-gradient(180deg, transparent, rgba(0,0,0,0.012));
+}
+
+html.dark .post-actions {
+  background: linear-gradient(180deg, transparent, rgba(255,255,255,0.012));
 }
 
 .post-action {
   display: flex;
   align-items: center;
-  gap: 6px;
-  padding: 7px 14px;
-  border-radius: 8px;
+  gap: 7px;
+  padding: 8px 14px;
+  border-radius: 10px;
   background: none;
-  border: none;
+  border: 1px solid transparent;
   color: var(--text-muted);
-  font-family: 'IBM Plex Sans', system-ui, sans-serif;
-  font-size: 0.8rem;
+  font-family: 'Inter', 'Söhne', 'SF Pro Display', -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
+  font-size: 0.82rem;
   font-weight: 500;
   cursor: pointer;
+  flex: 1;
+  justify-content: center;
+  transition: background-color 0.18s ease,
+              color 0.18s ease,
+              transform 0.18s cubic-bezier(.2,.8,.2,1),
+              border-color 0.18s ease;
 }
 
 .post-action:hover {
   background: var(--bg-inset);
   color: var(--blue-500);
+  border-color: var(--border);
+}
+
+.post-action:active {
+  transform: scale(0.96);
+}
+
+.post-action[data-react="like"]:hover { color: var(--react-like); }
+.post-action[data-react="comment"]:hover { color: var(--accent-perceptual); }
+.post-action[data-react="share"]:hover { color: var(--green-600); }
+
+.post-action[aria-pressed="true"][data-react="like"] {
+  color: var(--react-like);
+  background: rgba(83, 58, 253, 0.08);
+}
+
+html.dark .post-action[aria-pressed="true"][data-react="like"] {
+  background: rgba(96, 165, 250, 0.12);
 }
 
 /* ===========================
@@ -651,11 +910,18 @@ body {
 .sidebar-right {
   background: var(--bg-card);
   border-left: 1px solid var(--border);
-  padding: 24px 16px;
+  padding: 28px 20px;
   position: sticky;
   top: 0;
-  height: 100vh;
+  height: 100dvh;
   overflow-y: auto;
+}
+
+.sidebar-title {
+  font-family: 'Inter', 'Söhne', 'SF Pro Display', -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
+  font-weight: 600;
+  letter-spacing: -0.015em;
+  font-feature-settings: 'ss01';
 }
 
 .sidebar-section {
@@ -663,7 +929,7 @@ body {
 }
 
 .sidebar-title {
-  font-family: 'Source Serif 4', Georgia, serif;
+  font-family: 'Inter', 'Söhne', 'SF Pro Display', -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
   font-size: 0.9rem;
   font-weight: 600;
   color: var(--text-primary);
@@ -699,13 +965,13 @@ body {
 }
 
 .match-parser {
-  font-family: 'IBM Plex Mono', monospace;
+  font-family: 'Source Code Pro', ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
   font-size: 0.65rem;
   color: var(--text-muted);
 }
 
 .match-score {
-  font-family: 'IBM Plex Mono', monospace;
+  font-family: 'Source Code Pro', ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
   font-size: 0.7rem;
   font-weight: 600;
   color: var(--green-600);
@@ -727,7 +993,7 @@ body {
 }
 
 .group-name {
-  font-family: 'Source Serif 4', Georgia, serif;
+  font-family: 'Inter', 'Söhne', 'SF Pro Display', -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
   font-size: 0.85rem;
   font-weight: 600;
   color: var(--text-primary);
@@ -735,7 +1001,7 @@ body {
 }
 
 .group-members {
-  font-family: 'IBM Plex Mono', monospace;
+  font-family: 'Source Code Pro', ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
   font-size: 0.65rem;
   color: var(--text-muted);
 }
@@ -752,7 +1018,7 @@ body {
 }
 
 .trend-category {
-  font-family: 'IBM Plex Mono', monospace;
+  font-family: 'Source Code Pro', ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
   font-size: 0.65rem;
   color: var(--text-muted);
   text-transform: uppercase;
@@ -760,61 +1026,126 @@ body {
 }
 
 .trend-topic {
-  font-family: 'Source Serif 4', Georgia, serif;
+  font-family: 'Inter', 'Söhne', 'SF Pro Display', -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
   font-size: 0.9rem;
   font-weight: 600;
   color: var(--text-primary);
 }
 
 .trend-count {
-  font-family: 'IBM Plex Mono', monospace;
+  font-family: 'Source Code Pro', ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
   font-size: 0.65rem;
   color: var(--text-muted);
 }
 
 /* ===========================
-   Discovery Grid (Discover Page)
+   Discovery Grid (Discover Page) — asymmetric mosaic
    =========================== */
 
 .discovery-grid {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 16px;
+  grid-template-columns: 1.4fr 1fr 1fr;
+  grid-auto-rows: minmax(260px, auto);
+  gap: 18px;
+}
+
+.discovery-grid > .discovery-card:nth-child(6n + 1) {
+  grid-column: span 2;
+  text-align: left;
+}
+
+.discovery-grid > .discovery-card:nth-child(6n + 1) .discovery-avatar {
+  margin: 0 0 14px 0;
+  width: 84px;
+  height: 84px;
+  border-radius: 26px;
+  font-size: 1.4rem;
 }
 
 .discovery-card {
   background: var(--bg-card);
   border: 1px solid var(--border);
-  border-radius: 16px;
-  padding: 24px 20px;
+  border-radius: 20px;
+  padding: 26px 22px;
   text-align: center;
   cursor: pointer;
   box-shadow: var(--shadow-sm);
+  position: relative;
+  overflow: hidden;
+  isolation: isolate;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  transition: border-color 0.2s ease,
+              box-shadow 0.22s ease,
+              transform 0.22s cubic-bezier(.2,.8,.2,1);
+}
+
+.discovery-card::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  pointer-events: none;
+  z-index: -1;
+  background: radial-gradient(
+    420px circle at var(--mx, 50%) var(--my, 0%),
+    rgba(83, 58, 253, 0.10),
+    transparent 45%
+  );
+  opacity: 0;
+  transition: opacity 0.25s ease;
+}
+
+.discovery-card::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  pointer-events: none;
+  background:
+    radial-gradient(80% 60% at 100% 0%, rgba(13, 148, 136, 0.08), transparent 60%),
+    radial-gradient(60% 50% at 0% 100%, rgba(83, 58, 253, 0.06), transparent 60%);
+  opacity: 0.7;
+  z-index: -1;
 }
 
 .discovery-card:hover {
+  border-color: var(--border-strong);
+  box-shadow: var(--shadow-lg);
+  transform: translateY(-4px);
+}
+
+.discovery-card:hover::before {
+  opacity: 1;
+}
+
+.discovery-card:focus-within {
   border-color: var(--blue-500);
-  box-shadow: var(--shadow-md);
-  transform: translateY(-2px);
+  box-shadow: var(--focus-ring), var(--shadow-md);
 }
 
 .discovery-avatar {
-  width: 60px;
-  height: 60px;
-  border-radius: 50%;
-  background: linear-gradient(135deg, var(--blue-500), var(--amber-400));
+  width: 68px;
+  height: 68px;
+  border-radius: 22px;
+  background:
+    radial-gradient(120% 120% at 25% 15%, rgba(255,255,255,0.18) 0%, transparent 55%),
+    var(--blue-700);
   display: flex;
   align-items: center;
   justify-content: center;
+  font-family: 'Inter', 'Söhne', 'SF Pro Display', -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
   font-weight: 600;
-  font-size: 1.1rem;
+  font-size: 1.15rem;
+  letter-spacing: -0.01em;
   color: #FFFFFF;
-  margin: 0 auto 12px;
-  border: 2px solid var(--border);
+  margin: 0 auto 14px;
+  box-shadow: var(--shadow-md), inset 0 0 0 1px rgba(255,255,255,0.1);
 }
 
 .discovery-name {
-  font-family: 'Source Serif 4', Georgia, serif;
+  font-family: 'Inter', 'Söhne', 'SF Pro Display', -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
   font-weight: 600;
   font-size: 1rem;
   color: var(--text-primary);
@@ -822,7 +1153,7 @@ body {
 }
 
 .discovery-parser {
-  font-family: 'IBM Plex Mono', monospace;
+  font-family: 'Source Code Pro', ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
   font-size: 0.7rem;
   color: var(--text-muted);
   margin-bottom: 12px;
@@ -843,7 +1174,7 @@ body {
 }
 
 .compat-text {
-  font-family: 'IBM Plex Mono', monospace;
+  font-family: 'Source Code Pro', ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
   font-size: 0.7rem;
   color: var(--green-600);
   font-weight: 600;
@@ -875,8 +1206,21 @@ body {
 }
 
 .group-cover {
-  height: 80px;
-  background: linear-gradient(135deg, var(--blue-500), var(--accent-perceptual));
+  height: 96px;
+  background:
+    radial-gradient(80% 120% at 20% 0%, rgba(255,255,255,0.22) 0%, transparent 55%),
+    radial-gradient(60% 100% at 90% 100%, rgba(13, 148, 136, 0.45) 0%, transparent 60%),
+    var(--blue-700);
+  position: relative;
+}
+
+.group-cover::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(circle at 30% 50%, rgba(255,255,255,0.08) 0%, transparent 25%),
+    radial-gradient(circle at 70% 30%, rgba(255,255,255,0.06) 0%, transparent 20%);
 }
 
 .group-details {
@@ -884,7 +1228,7 @@ body {
 }
 
 .group-full-name {
-  font-family: 'Source Serif 4', Georgia, serif;
+  font-family: 'Inter', 'Söhne', 'SF Pro Display', -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
   font-weight: 600;
   font-size: 1rem;
   color: var(--text-primary);
@@ -899,7 +1243,7 @@ body {
 }
 
 .group-stats {
-  font-family: 'IBM Plex Mono', monospace;
+  font-family: 'Source Code Pro', ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
   font-size: 0.7rem;
   color: var(--text-muted);
 }
@@ -912,13 +1256,13 @@ body {
   display: grid;
   grid-template-columns: 280px 1fr;
   gap: 16px;
-  height: calc(100vh - 120px);
+  height: calc(100dvh - 140px);
 }
 
 .conversations-list {
   background: var(--bg-card);
   border: 1px solid var(--border);
-  border-radius: 12px;
+  border-radius: 8px;
   overflow: hidden;
   box-shadow: var(--shadow-sm);
 }
@@ -926,7 +1270,7 @@ body {
 .conversations-header {
   padding: 14px 16px;
   border-bottom: 1px solid var(--border);
-  font-family: 'Source Serif 4', Georgia, serif;
+  font-family: 'Inter', 'Söhne', 'SF Pro Display', -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
   font-weight: 600;
   font-size: 0.95rem;
   color: var(--text-primary);
@@ -950,17 +1294,22 @@ body {
 }
 
 .conv-avatar {
-  width: 40px;
-  height: 40px;
-  border-radius: 50%;
-  background: linear-gradient(135deg, var(--amber-400), var(--accent-perceptual));
+  width: 42px;
+  height: 42px;
+  border-radius: 15px;
+  background:
+    radial-gradient(120% 120% at 25% 15%, rgba(255,255,255,0.16) 0%, transparent 55%),
+    var(--blue-600);
   display: flex;
   align-items: center;
   justify-content: center;
+  font-family: 'Inter', 'Söhne', 'SF Pro Display', -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
   font-weight: 600;
-  font-size: 0.8rem;
+  font-size: 0.82rem;
+  letter-spacing: -0.01em;
   color: #FFFFFF;
   flex-shrink: 0;
+  box-shadow: var(--shadow-sm), inset 0 0 0 1px rgba(255,255,255,0.08);
 }
 
 .conv-info {
@@ -983,7 +1332,7 @@ body {
 }
 
 .conv-time {
-  font-family: 'IBM Plex Mono', monospace;
+  font-family: 'Source Code Pro', ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
   font-size: 0.65rem;
   color: var(--text-muted);
 }
@@ -992,7 +1341,7 @@ body {
 .chat-area {
   background: var(--bg-card);
   border: 1px solid var(--border);
-  border-radius: 12px;
+  border-radius: 8px;
   display: flex;
   flex-direction: column;
   box-shadow: var(--shadow-sm);
@@ -1035,14 +1384,14 @@ body {
 }
 
 .message.sent .message-bubble {
-  background: rgba(37, 99, 235, 0.1);
-  border: 1px solid rgba(37, 99, 235, 0.13);
+  background: rgba(83, 58, 253, 0.1);
+  border: 1px solid rgba(83, 58, 253, 0.13);
   border-radius: 16px 16px 4px 16px;
   color: var(--text-primary);
 }
 
 .message-time {
-  font-family: 'IBM Plex Mono', monospace;
+  font-family: 'Source Code Pro', ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
   font-size: 0.6rem;
   color: var(--text-muted);
   margin-top: 4px;
@@ -1060,10 +1409,10 @@ body {
   flex: 1;
   background: var(--bg-inset);
   border: 1px solid var(--border);
-  border-radius: 12px;
+  border-radius: 8px;
   padding: 12px 14px;
   color: var(--text-primary);
-  font-family: 'IBM Plex Sans', system-ui, sans-serif;
+  font-family: 'Inter', 'Söhne', 'SF Pro Display', -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
   font-size: 0.88rem;
 }
 
@@ -1101,8 +1450,8 @@ body {
   position: absolute;
   inset: 0;
   background:
-    radial-gradient(ellipse at 20% 50%, rgba(37, 99, 235, 0.15) 0%, transparent 60%),
-    radial-gradient(ellipse at 80% 20%, rgba(59, 130, 246, 0.1) 0%, transparent 50%);
+    radial-gradient(ellipse at 20% 50%, rgba(83, 58, 253, 0.15) 0%, transparent 60%),
+    radial-gradient(ellipse at 80% 20%, rgba(124, 108, 255, 0.1) 0%, transparent 50%);
 }
 
 .profile-info-section {
@@ -1121,7 +1470,7 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
-  font-family: 'IBM Plex Sans', system-ui, sans-serif;
+  font-family: 'Inter', 'Söhne', 'SF Pro Display', -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
   font-size: 1.6rem;
   font-weight: 600;
   color: var(--text-primary);
@@ -1135,9 +1484,11 @@ body {
 }
 
 .profile-name-large {
-  font-family: 'Source Serif 4', Georgia, serif;
+  font-family: 'Inter', 'Söhne', 'SF Pro Display', -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
   font-size: 1.5rem;
-  font-weight: 700;
+  font-weight: 300;
+  letter-spacing: -0.02em;
+  font-feature-settings: 'ss01';
   color: var(--text-primary);
   margin-bottom: 6px;
   line-height: 1.2;
@@ -1147,7 +1498,7 @@ body {
   display: inline-block;
   background: var(--status-info-bg);
   color: var(--status-info-text);
-  font-family: 'IBM Plex Mono', monospace;
+  font-family: 'Source Code Pro', ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
   padding: 3px 10px;
   border-radius: 4px;
   font-size: 0.7rem;
@@ -1171,14 +1522,14 @@ body {
 }
 
 .profile-stat-value {
-  font-family: 'Source Serif 4', Georgia, serif;
+  font-family: 'Inter', 'Söhne', 'SF Pro Display', -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
   font-size: 1.2rem;
-  font-weight: 700;
+  font-weight: 500;
   color: var(--text-primary);
 }
 
 .profile-stat-label {
-  font-family: 'IBM Plex Mono', monospace;
+  font-family: 'Source Code Pro', ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
   font-size: 0.7rem;
   color: var(--text-muted);
   text-transform: uppercase;
@@ -1190,7 +1541,7 @@ body {
    =========================== */
 
 .status-tag {
-  font-family: 'IBM Plex Mono', monospace;
+  font-family: 'Source Code Pro', ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
   font-size: 0.65rem;
   text-transform: uppercase;
   letter-spacing: 0.04em;
@@ -1243,9 +1594,9 @@ input[type="password"],
 textarea {
   background: var(--bg-card);
   border: 1px solid var(--border);
-  border-radius: 12px;
+  border-radius: 8px;
   color: var(--text-primary);
-  font-family: 'IBM Plex Sans', system-ui, sans-serif;
+  font-family: 'Inter', 'Söhne', 'SF Pro Display', -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
   font-size: 0.88rem;
 }
 
@@ -1264,7 +1615,7 @@ textarea::placeholder {
 }
 
 label {
-  font-family: 'IBM Plex Sans', system-ui, sans-serif;
+  font-family: 'Inter', 'Söhne', 'SF Pro Display', -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
   font-size: 0.85rem;
   font-weight: 500;
   color: var(--text-secondary);
@@ -1320,7 +1671,7 @@ label {
   }
   .messages-layout {
     grid-template-columns: 1fr;
-    height: calc(100vh - 180px);
+    height: calc(100dvh - 200px);
   }
   .conversations-list {
     display: none;
@@ -1377,7 +1728,7 @@ label {
 }
 
 .mobile-nav-label {
-  font-family: 'IBM Plex Sans', system-ui, sans-serif;
+  font-family: 'Inter', 'Söhne', 'SF Pro Display', -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
 }
 
 /* ===========================
@@ -1388,7 +1739,7 @@ label {
   display: flex;
   align-items: center;
   justify-content: center;
-  min-height: 100vh;
+  min-height: 100dvh;
   padding: 20px;
   background: var(--bg-page);
 }
@@ -1404,16 +1755,18 @@ label {
 }
 
 .auth-logo {
-  font-family: 'Source Serif 4', Georgia, serif;
+  font-family: 'Inter', 'Söhne', 'SF Pro Display', -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
   font-size: 1.3rem;
-  font-weight: 700;
+  font-weight: 600;
+  letter-spacing: -0.022em;
+  font-feature-settings: 'ss01';
   color: var(--text-primary);
   text-align: center;
   margin-bottom: 2px;
 }
 
 .auth-logo-sub {
-  font-family: 'IBM Plex Mono', monospace;
+  font-family: 'Source Code Pro', ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
   font-size: 0.6rem;
   text-transform: uppercase;
   letter-spacing: 0.15em;
@@ -1423,9 +1776,11 @@ label {
 }
 
 .auth-title {
-  font-family: 'Source Serif 4', Georgia, serif;
-  font-size: 1.5rem;
-  font-weight: 700;
+  font-family: 'Inter', 'Söhne', 'SF Pro Display', -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
+  font-size: 1.75rem;
+  font-weight: 300;
+  letter-spacing: -0.02em;
+  font-feature-settings: 'ss01';
   color: var(--text-primary);
   text-align: center;
   margin-bottom: 24px;
@@ -1574,9 +1929,10 @@ label {
 }
 
 .city-card-name {
-  font-family: 'Source Serif 4', Georgia, serif;
+  font-family: 'Inter', 'Söhne', 'SF Pro Display', -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
   font-size: 1.15rem;
-  font-weight: 700;
+  font-weight: 500;
+  letter-spacing: -0.012em;
   color: var(--text-primary);
   line-height: 1.25;
 }
@@ -1604,7 +1960,7 @@ label {
   background: none;
   border: none;
   color: var(--text-muted);
-  font-family: 'IBM Plex Sans', system-ui, sans-serif;
+  font-family: 'Inter', 'Söhne', 'SF Pro Display', -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
   font-size: 0.9rem;
   cursor: pointer;
   padding: 8px;
@@ -1644,7 +2000,7 @@ label {
   background: var(--bg-inset);
   border: 1px solid var(--border);
   border-radius: 10px;
-  font-family: 'IBM Plex Sans', system-ui, sans-serif;
+  font-family: 'Inter', 'Söhne', 'SF Pro Display', -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
   font-size: 0.85rem;
   font-weight: 500;
   color: var(--text-secondary);
@@ -1712,7 +2068,7 @@ label {
 }
 
 .crisis-link-sub {
-  font-family: 'IBM Plex Mono', monospace;
+  font-family: 'Source Code Pro', ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
   font-size: 0.7rem;
   color: var(--text-muted);
   margin-top: 1px;
@@ -1744,7 +2100,7 @@ label {
 }
 
 .mood-title {
-  font-family: 'Source Serif 4', Georgia, serif;
+  font-family: 'Inter', 'Söhne', 'SF Pro Display', -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
   font-size: 0.95rem;
   font-weight: 600;
   color: var(--text-primary);
@@ -1779,7 +2135,7 @@ label {
   padding: 10px 14px;
   background: var(--bg-inset);
   border: 2px solid var(--border);
-  border-radius: 12px;
+  border-radius: 8px;
   cursor: pointer;
   transition: all 0.2s;
   flex: 1;
@@ -1800,7 +2156,7 @@ label {
 }
 
 .mood-label {
-  font-family: 'IBM Plex Mono', monospace;
+  font-family: 'Source Code Pro', ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
   font-size: 0.65rem;
   color: var(--text-muted);
 }
@@ -1824,7 +2180,7 @@ label {
   background: var(--bg-inset);
   border: 1px solid var(--border);
   color: var(--text-primary);
-  font-family: 'IBM Plex Sans', system-ui, sans-serif;
+  font-family: 'Inter', 'Söhne', 'SF Pro Display', -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
 }
 
 .mood-note-input:focus {
@@ -1849,7 +2205,7 @@ label {
 }
 
 .mood-today-sub {
-  font-family: 'IBM Plex Mono', monospace;
+  font-family: 'Source Code Pro', ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
   font-size: 0.7rem;
   color: var(--text-muted);
   margin-top: 2px;
@@ -1867,8 +2223,8 @@ label {
   padding: 14px 18px;
   margin-bottom: 16px;
   background: var(--status-info-bg);
-  border: 1px solid rgba(37, 99, 235, 0.15);
-  border-radius: 12px;
+  border: 1px solid rgba(83, 58, 253, 0.15);
+  border-radius: 8px;
   animation: slideDown 0.3s ease;
 }
 
@@ -1906,7 +2262,7 @@ label {
   border: 1px solid var(--status-info-text);
   border-radius: 6px;
   padding: 5px 12px;
-  font-family: 'IBM Plex Sans', system-ui, sans-serif;
+  font-family: 'Inter', 'Söhne', 'SF Pro Display', -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
   font-size: 0.78rem;
   font-weight: 500;
   color: var(--status-info-text);
@@ -1993,7 +2349,7 @@ label {
   gap: 16px;
   background: var(--bg-card);
   border: 1px solid var(--border);
-  border-radius: 12px;
+  border-radius: 8px;
   padding: 16px;
   text-decoration: none;
   color: inherit;
@@ -2043,7 +2399,7 @@ label {
   color: var(--text-secondary);
 }
 
-.news-card-tag-brain { background: rgba(37, 99, 235, 0.12); color: #2563EB; }
+.news-card-tag-brain { background: rgba(83, 58, 253, 0.12); color: #533AFD; }
 .news-card-tag-mental { background: rgba(124, 58, 237, 0.12); color: #7C3AED; }
 .news-card-tag-gut { background: rgba(217, 119, 6, 0.12); color: #B45309; }
 .news-card-tag-holistic { background: rgba(5, 150, 105, 0.12); color: #047857; }
@@ -2058,9 +2414,10 @@ label {
 }
 
 .news-card-title {
-  font-family: 'Source Serif 4', Georgia, serif;
+  font-family: 'Inter', 'Söhne', 'SF Pro Display', -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
   font-size: 1.05rem;
-  font-weight: 700;
+  font-weight: 500;
+  letter-spacing: -0.012em;
   line-height: 1.3;
   color: var(--text-primary);
   margin: 0;
@@ -2084,9 +2441,10 @@ label {
 }
 
 .news-empty-title {
-  font-family: 'Source Serif 4', Georgia, serif;
+  font-family: 'Inter', 'Söhne', 'SF Pro Display', -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
   font-size: 1.15rem;
-  font-weight: 700;
+  font-weight: 400;
+  letter-spacing: -0.012em;
   color: var(--text-primary);
   margin-bottom: 6px;
 }
@@ -2099,5 +2457,499 @@ label {
   .news-card-image {
     width: 100%;
     height: 180px;
+  }
+}
+
+/* ============================================================
+   PREMIUM UPGRADE LAYER
+   Added by the redesign-skill upgrade pass.
+   Adds: glass app-header, command bar, skeleton loaders, story
+   rail, reaction palette, profile cover polish, focus rings,
+   responsive guardrails.
+   ============================================================ */
+
+/* --- Reduced motion: respect user preference --- */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* --- Selection --- */
+::selection {
+  background: rgba(83, 58, 253, 0.22);
+  color: var(--text-primary);
+}
+
+/* --- Glass app header (sits inside main-content) --- */
+.app-header {
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin: -28px -24px 22px;
+  padding: 14px 24px;
+  background: var(--header-bg);
+  border-bottom: 1px solid var(--border);
+  backdrop-filter: blur(18px) saturate(160%);
+  -webkit-backdrop-filter: blur(18px) saturate(160%);
+  box-shadow:
+    0 1px 0 rgba(255,255,255,0.03) inset,
+    0 6px 24px rgba(12, 35, 64, 0.04);
+}
+
+.app-header-search {
+  flex: 1;
+  max-width: 540px;
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.app-header-search input {
+  width: 100%;
+  background: var(--bg-inset);
+  border: 1px solid var(--border);
+  color: var(--text-primary);
+  border-radius: 8px;
+  padding: 10px 14px 10px 38px;
+  font-family: 'Inter', 'Söhne', 'SF Pro Display', -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
+  font-size: 0.92rem;
+  letter-spacing: -0.005em;
+  transition: border-color 0.18s ease, box-shadow 0.18s ease, background-color 0.18s ease;
+}
+
+.app-header-search input::placeholder {
+  color: var(--text-muted);
+}
+
+.app-header-search input:focus {
+  outline: none;
+  border-color: var(--blue-500);
+  background: var(--bg-card);
+  box-shadow: var(--focus-ring);
+}
+
+.app-header-search::before {
+  content: '';
+  position: absolute;
+  left: 12px;
+  top: 50%;
+  width: 16px;
+  height: 16px;
+  transform: translateY(-50%);
+  background: currentColor;
+  color: var(--text-muted);
+  -webkit-mask: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><circle cx='11' cy='11' r='7'/><path d='M21 21l-4.3-4.3'/></svg>") center/contain no-repeat;
+          mask: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><circle cx='11' cy='11' r='7'/><path d='M21 21l-4.3-4.3'/></svg>") center/contain no-repeat;
+}
+
+.app-header-kbd {
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-family: 'Source Code Pro', ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  font-size: 0.7rem;
+  color: var(--text-muted);
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  padding: 2px 7px;
+  border-radius: 5px;
+  pointer-events: none;
+}
+
+.app-header-actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-left: auto;
+}
+
+.icon-btn {
+  width: 38px;
+  height: 38px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 8px;
+  border: 1px solid var(--border);
+  background: var(--bg-card);
+  color: var(--text-secondary);
+  font-size: 1rem;
+  cursor: pointer;
+  position: relative;
+  transition: border-color 0.16s ease,
+              color 0.16s ease,
+              background-color 0.16s ease,
+              transform 0.16s cubic-bezier(.2,.8,.2,1);
+}
+
+.icon-btn:hover {
+  border-color: var(--border-strong);
+  color: var(--text-primary);
+  background: var(--bg-inset);
+  transform: translateY(-1px);
+}
+
+.icon-btn:active {
+  transform: scale(0.94);
+}
+
+.icon-btn[data-dot]::after {
+  content: '';
+  position: absolute;
+  top: 9px;
+  right: 9px;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--react-love);
+  box-shadow: 0 0 0 2px var(--bg-card);
+}
+
+/* --- Story / highlight rail (premium social feel) --- */
+.story-rail {
+  display: flex;
+  gap: 12px;
+  overflow-x: auto;
+  padding: 4px 2px 12px;
+  margin-bottom: 18px;
+  scrollbar-width: none;
+}
+
+.story-rail::-webkit-scrollbar { display: none; }
+
+.story-card {
+  flex: 0 0 116px;
+  height: 168px;
+  border-radius: 10px;
+  position: relative;
+  overflow: hidden;
+  cursor: pointer;
+  background: var(--blue-700);
+  box-shadow: var(--shadow-sm);
+  transition: transform 0.22s cubic-bezier(.2,.8,.2,1), box-shadow 0.22s ease;
+}
+
+.story-card:hover {
+  transform: translateY(-3px);
+  box-shadow: var(--shadow-md);
+}
+
+.story-card::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(120% 90% at 20% 0%, rgba(255,255,255,0.18), transparent 55%),
+    linear-gradient(180deg, transparent 40%, rgba(0,0,0,0.45) 100%);
+}
+
+.story-card-label {
+  position: absolute;
+  left: 12px;
+  bottom: 10px;
+  right: 12px;
+  font-family: 'Inter', 'Söhne', 'SF Pro Display', -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
+  font-size: 0.78rem;
+  font-weight: 600;
+  letter-spacing: -0.005em;
+  color: #fff;
+  z-index: 1;
+  text-shadow: 0 1px 2px rgba(0,0,0,0.35);
+}
+
+.story-card-avatar {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  width: 30px;
+  height: 30px;
+  border-radius: 8px;
+  background: var(--bg-card);
+  color: var(--text-primary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: 'Inter', 'Söhne', 'SF Pro Display', -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
+  font-weight: 700;
+  font-size: 0.7rem;
+  letter-spacing: -0.01em;
+  z-index: 1;
+  box-shadow: 0 0 0 2px var(--blue-500);
+}
+
+.story-card.is-add {
+  background: var(--bg-card);
+  border: 2px dashed var(--border-strong);
+  color: var(--text-secondary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.4rem;
+}
+
+.story-card.is-add::before { display: none; }
+.story-card.is-add:hover {
+  border-color: var(--blue-500);
+  color: var(--blue-500);
+}
+
+/* Story tints — use accent variety, not blue-purple AI gradient */
+.story-card[data-tint="teal"]   { background:
+  radial-gradient(120% 110% at 0% 0%, #14B8A6 0%, transparent 60%),
+  linear-gradient(180deg, #0F766E 0%, #134E4A 100%); }
+.story-card[data-tint="amber"]  { background:
+  radial-gradient(120% 110% at 0% 0%, #F59E0B 0%, transparent 55%),
+  linear-gradient(180deg, #B45309 0%, #7C2D12 100%); }
+.story-card[data-tint="blue"]   { background:
+  radial-gradient(120% 110% at 0% 0%, #665EFD 0%, transparent 60%),
+  linear-gradient(180deg, #2E2B8C 0%, #1C1E54 100%); }
+.story-card[data-tint="rose"]   { background:
+  radial-gradient(120% 110% at 0% 0%, #FB7185 0%, transparent 55%),
+  linear-gradient(180deg, #BE123C 0%, #4C0519 100%); }
+.story-card[data-tint="green"]  { background:
+  radial-gradient(120% 110% at 0% 0%, #34D399 0%, transparent 60%),
+  linear-gradient(180deg, #065F46 0%, #022C22 100%); }
+
+/* --- Skeleton loaders --- */
+@keyframes cb-shimmer {
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+
+.skeleton {
+  border-radius: 10px;
+  background: linear-gradient(
+    90deg,
+    var(--bg-inset) 0%,
+    rgba(83, 58, 253, 0.06) 50%,
+    var(--bg-inset) 100%
+  );
+  background-size: 200% 100%;
+  animation: cb-shimmer 1.6s ease-in-out infinite;
+}
+
+.skeleton-post {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 20px;
+  margin-bottom: 18px;
+  box-shadow: var(--shadow-sm);
+}
+
+.skeleton-row {
+  display: flex;
+  gap: 14px;
+  align-items: center;
+  margin-bottom: 16px;
+}
+
+.skeleton-avatar {
+  width: 44px;
+  height: 44px;
+  border-radius: 16px;
+  flex-shrink: 0;
+}
+
+.skeleton-line {
+  height: 12px;
+  border-radius: 6px;
+}
+
+.skeleton-line-sm { height: 10px; width: 35%; }
+.skeleton-line-md { width: 70%; }
+.skeleton-line-lg { width: 100%; }
+
+/* --- Empty states --- */
+.empty-state {
+  background: var(--bg-card);
+  border: 1px dashed var(--border-strong);
+  border-radius: 10px;
+  padding: 56px 28px;
+  text-align: center;
+  color: var(--text-muted);
+}
+
+.empty-state-icon {
+  font-size: 2.2rem;
+  margin-bottom: 14px;
+  display: inline-flex;
+  width: 64px;
+  height: 64px;
+  align-items: center;
+  justify-content: center;
+  border-radius: 22px;
+  background: var(--bg-inset);
+  color: var(--blue-500);
+  box-shadow: var(--shadow-sm), inset 0 0 0 1px var(--border);
+}
+
+.empty-state-title {
+  font-family: 'Inter', 'Söhne', 'SF Pro Display', -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
+  font-size: 1.4rem;
+  font-weight: 300;
+  letter-spacing: -0.02em;
+  font-feature-settings: 'ss01';
+  color: var(--text-primary);
+  margin-bottom: 6px;
+  text-wrap: balance;
+}
+
+.empty-state-body {
+  font-size: 0.95rem;
+  line-height: 1.55;
+  max-width: 38ch;
+  margin: 0 auto 18px;
+}
+
+/* --- Reaction palette (Facebook-class clarity) --- */
+.reaction-palette {
+  position: absolute;
+  bottom: calc(100% + 6px);
+  left: 0;
+  display: flex;
+  gap: 4px;
+  padding: 6px;
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  box-shadow: var(--shadow-lg);
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(6px) scale(0.96);
+  transform-origin: bottom left;
+  transition: opacity 0.18s ease,
+              transform 0.22s cubic-bezier(.2,.8,.2,1),
+              visibility 0s linear 0.2s;
+  z-index: 5;
+}
+
+.post-action[data-react="like"]:hover .reaction-palette,
+.post-action[data-react="like"]:focus-within .reaction-palette {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0) scale(1);
+  transition-delay: 0s;
+}
+
+.reaction-emoji {
+  width: 36px;
+  height: 36px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  font-size: 1.25rem;
+  transition: transform 0.18s cubic-bezier(.2,.8,.2,1);
+}
+
+.reaction-emoji:hover {
+  transform: translateY(-6px) scale(1.25);
+}
+
+/* --- Profile cover (kill repetitive radial gradient pattern) --- */
+.profile-cover {
+  height: 170px;
+}
+
+.profile-cover::after {
+  background:
+    radial-gradient(80% 110% at 18% 0%, rgba(83, 58, 253, 0.32) 0%, transparent 55%),
+    radial-gradient(70% 90% at 95% 100%, rgba(13, 148, 136, 0.28) 0%, transparent 55%),
+    radial-gradient(50% 70% at 60% 30%, rgba(124, 58, 237, 0.18) 0%, transparent 60%);
+}
+
+.profile-avatar-large {
+  width: 100px;
+  height: 100px;
+  border-radius: 30px;
+  margin-top: -64px;
+  background:
+    radial-gradient(120% 120% at 25% 15%, rgba(255,255,255,0.18) 0%, transparent 55%),
+    var(--blue-700);
+  color: #fff;
+  font-family: 'Inter', 'Söhne', 'SF Pro Display', -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  border: 4px solid var(--bg-card);
+  box-shadow: var(--shadow-lg), inset 0 0 0 1px rgba(255,255,255,0.1);
+}
+
+.profile-name-large {
+  font-size: 1.85rem;
+  font-weight: 300;
+  letter-spacing: -0.022em;
+  text-wrap: balance;
+}
+
+/* --- Card spotlight (assigned by JS in layout.tsx) --- */
+.spotlight {
+  position: relative;
+}
+
+/* --- Focus-visible polish across the app --- */
+a:focus-visible,
+button:focus-visible,
+[role="button"]:focus-visible {
+  outline: none;
+  box-shadow: var(--focus-ring);
+  border-radius: 8px;
+}
+
+/* --- Optical alignment helpers --- */
+.optic-up { transform: translateY(-1px); }
+
+/* --- Responsive layout guard for wider viewports --- */
+@media (min-width: 1440px) {
+  .app-layout {
+    grid-template-columns: 280px 1fr 340px;
+  }
+  .main-content {
+    padding: 32px 36px;
+  }
+}
+
+@media (max-width: 1100px) {
+  .discovery-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+  .discovery-grid > .discovery-card:nth-child(6n + 1) {
+    grid-column: span 2;
+  }
+}
+
+@media (max-width: 700px) {
+  .app-header {
+    margin: -20px -16px 18px;
+    padding: 12px 16px;
+  }
+  .app-header-kbd { display: none; }
+  .discovery-grid {
+    grid-template-columns: 1fr;
+  }
+  .discovery-grid > .discovery-card:nth-child(6n + 1) {
+    grid-column: span 1;
+    text-align: center;
+  }
+  .discovery-grid > .discovery-card:nth-child(6n + 1) .discovery-avatar {
+    margin: 0 auto 14px;
+    width: 68px;
+    height: 68px;
+    border-radius: 22px;
+    font-size: 1.15rem;
+  }
+  .view-title {
+    font-size: clamp(1.5rem, 6vw, 2rem);
   }
 }

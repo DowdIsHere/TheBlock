@@ -96,10 +96,21 @@ export default function DiscoverPage() {
       <>
         <div className="view-header">
           <h1 className="view-title">Discover</h1>
-          <p className="view-subtitle">Parsers you may click with</p>
+          <p className="view-subtitle">Parsers whose cognitive architecture maps to yours.</p>
         </div>
-        <div style={{ textAlign: 'center', padding: '48px 20px', color: 'var(--text-muted)', fontSize: '0.9rem' }}>
-          Loading...
+        <div className="discovery-grid" aria-busy="true">
+          {Array.from({ length: 6 }).map((_, i) => (
+            <div key={i} className="discovery-card" aria-hidden="true">
+              <div>
+                <div className="skeleton skeleton-avatar" style={{ width: 68, height: 68, borderRadius: 22, margin: '0 auto 14px' }} />
+                <div className="skeleton skeleton-line skeleton-line-md" style={{ margin: '0 auto 8px' }} />
+                <div className="skeleton skeleton-line skeleton-line-sm" style={{ margin: '0 auto 14px' }} />
+                <div className="skeleton skeleton-line skeleton-line-lg" style={{ marginBottom: 6 }} />
+                <div className="skeleton skeleton-line skeleton-line-lg" />
+              </div>
+              <div className="skeleton" style={{ height: 32, borderRadius: 10, marginTop: 18 }} />
+            </div>
+          ))}
         </div>
       </>
     )
@@ -109,12 +120,16 @@ export default function DiscoverPage() {
     <>
       <div className="view-header">
         <h1 className="view-title">Discover</h1>
-        <p className="view-subtitle">Parsers you may click with</p>
+        <p className="view-subtitle">Parsers whose cognitive architecture maps to yours.</p>
       </div>
 
       {users.length === 0 ? (
-        <div style={{ textAlign: 'center', padding: '48px 20px', color: 'var(--text-muted)', fontSize: '0.9rem' }}>
-          No other users yet. Invite people to join The Cognition Block!
+        <div className="empty-state">
+          <div className="empty-state-icon" aria-hidden="true">🧭</div>
+          <div className="empty-state-title">No parsers in your orbit yet</div>
+          <p className="empty-state-body">
+            The community is still finding its shape. Invite a friend or share your profile to surface compatibility matches.
+          </p>
         </div>
       ) : (
         <div className="discovery-grid">
