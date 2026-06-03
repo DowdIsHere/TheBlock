@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { prisma } from '@/lib/prisma'
 import { getSessionUserId } from '@/lib/session'
+import { MAX_LENGTHS } from '@/lib/validation'
 
 export async function GET(
   request: NextRequest,
@@ -36,6 +37,9 @@ export async function POST(
     const { content } = await request.json()
     if (!content?.trim()) {
       return NextResponse.json({ error: 'Comment is required' }, { status: 400 })
+    }
+    if (content.trim().length > MAX_LENGTHS.comment) {
+      return NextResponse.json({ error: 'Comment is too long' }, { status: 400 })
     }
 
     const comment = await prisma.comment.create({

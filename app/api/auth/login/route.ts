@@ -33,6 +33,6 @@ export async function POST(request: NextRequest) {
     return NextResponse.json({ id: user.id, email: user.email, firstName: user.firstName, lastName: user.lastName })
   } catch (error: any) {
     console.error('Login error:', error)
-    return NextResponse.json({ error: error?.message || 'Login failed' }, { status: 500 })
+    return NextResponse.json({ error: 'Login failed. Please try again.' }, { status: 500 })
   }
 }
