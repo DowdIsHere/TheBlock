@@ -1,0 +1,408 @@
+/* ===========================================================
+   Status tags, data bars, auth, onboarding, news.
+   =========================================================== */
+
+/* ----------------------------------------------------------
+   Status tags / badges
+   ---------------------------------------------------------- */
+
+.status-tag {
+  font-family: var(--font-mono);
+  font-size: 0.64rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  padding: 3px 8px;
+  border-radius: var(--r-chip);
+  font-weight: 600;
+}
+
+.status-preserved { background: var(--status-preserved-bg); color: var(--status-preserved-text); }
+.status-compromised { background: var(--status-compromised-bg); color: var(--status-compromised-text); }
+.status-partial { background: var(--status-partial-bg); color: var(--status-partial-text); }
+.status-info { background: var(--status-info-bg); color: var(--status-info-text); }
+
+/* Data bars */
+.data-bar-track {
+  background: var(--bar-track);
+  height: 8px;
+  border-radius: var(--r-full);
+  overflow: hidden;
+}
+
+.data-bar-fill.high { background: var(--bar-high); }
+.data-bar-fill.med  { background: var(--bar-med); }
+.data-bar-fill.low  { background: var(--bar-low); }
+
+/* ----------------------------------------------------------
+   Auth — premium glass gateway
+   ---------------------------------------------------------- */
+
+.auth-page {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 100dvh;
+  padding: 24px;
+  background: var(--bg-page);
+  position: relative;
+  overflow: hidden;
+}
+
+/* Ambient brand glow behind the card */
+.auth-page::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background:
+    radial-gradient(48rem 36rem at 50% -10%, var(--accent-soft), transparent 60%),
+    radial-gradient(40rem 30rem at 90% 110%, rgba(124, 58, 237, 0.12), transparent 60%);
+}
+
+.auth-card {
+  position: relative;
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--r-panel);
+  padding: 44px 38px;
+  width: 100%;
+  max-width: 432px;
+  box-shadow: var(--ring-highlight), var(--shadow-lg);
+}
+
+.auth-logo {
+  font-size: 1.4rem;
+  font-weight: 700;
+  letter-spacing: -0.025em;
+  color: var(--text-primary);
+  text-align: center;
+  margin-bottom: 4px;
+}
+
+.auth-logo-sub {
+  font-family: var(--font-mono);
+  font-size: 0.6rem;
+  text-transform: uppercase;
+  letter-spacing: 0.18em;
+  color: var(--text-muted);
+  text-align: center;
+  margin-bottom: 34px;
+}
+
+.auth-title {
+  font-size: 1.55rem;
+  font-weight: 700;
+  letter-spacing: -0.025em;
+  color: var(--text-primary);
+  text-align: center;
+  margin-bottom: 26px;
+}
+
+.auth-error {
+  background: var(--status-compromised-bg);
+  color: var(--status-compromised-text);
+  padding: 11px 14px;
+  border-radius: var(--r-input);
+  font-size: 0.85rem;
+  font-weight: 500;
+  margin-bottom: 16px;
+  text-align: center;
+}
+
+.auth-form { display: flex; flex-direction: column; gap: 16px; }
+.auth-field { display: flex; flex-direction: column; gap: 7px; }
+
+.auth-field input,
+.auth-field textarea {
+  padding: 12px 15px;
+  border-radius: var(--r-input);
+  background: var(--bg-inset);
+}
+
+.auth-submit { width: 100%; margin-top: 8px; padding: 13px 20px; font-size: 0.92rem; }
+.auth-submit:disabled { opacity: 0.6; cursor: not-allowed; }
+
+.auth-switch {
+  text-align: center;
+  margin-top: 22px;
+  font-size: 0.86rem;
+  color: var(--text-muted);
+}
+
+.auth-switch a { color: var(--accent); text-decoration: none; font-weight: 600; }
+.auth-switch a:hover { text-decoration: underline; }
+
+/* ----------------------------------------------------------
+   Onboarding — city selector
+   ---------------------------------------------------------- */
+
+.onboarding-card {
+  position: relative;
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--r-panel);
+  padding: 50px 46px;
+  width: 100%;
+  max-width: 780px;
+  box-shadow: var(--ring-highlight), var(--shadow-lg);
+}
+
+.onboarding-subtitle {
+  text-align: center;
+  color: var(--text-muted);
+  font-size: 1rem;
+  line-height: 1.55;
+  margin-bottom: 34px;
+  margin-top: -6px;
+}
+
+.city-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+  margin-bottom: 28px;
+}
+
+.city-card {
+  background: var(--bg-inset);
+  border: 1.5px solid var(--border);
+  border-radius: var(--r-card);
+  padding: 24px 22px;
+  text-align: left;
+  cursor: pointer;
+  transition: border-color var(--t-mid) var(--ease),
+              box-shadow var(--t-mid) var(--ease),
+              transform var(--t-fast) var(--ease),
+              background var(--t-mid) var(--ease);
+  font-family: inherit;
+  color: inherit;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  min-height: 162px;
+}
+
+.city-card:hover {
+  border-color: var(--city-color, var(--accent));
+  box-shadow: var(--shadow-md);
+  transform: translateY(-3px);
+}
+
+.city-card-selected {
+  border-color: var(--city-color, var(--accent));
+  background: var(--bg-card);
+  box-shadow: 0 0 0 1.5px var(--city-color, var(--accent)), var(--shadow-md);
+}
+
+.city-card-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.city-card-icon { font-size: 2rem; line-height: 1; }
+
+.city-card-check {
+  width: 24px;
+  height: 24px;
+  border-radius: var(--r-full);
+  border: 2px solid var(--border-strong);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background var(--t-fast), border-color var(--t-fast);
+  flex-shrink: 0;
+}
+
+.city-card-selected .city-card-check {
+  background: var(--city-color, var(--accent));
+  border-color: var(--city-color, var(--accent));
+  color: #FFFFFF;
+}
+
+.city-card-name {
+  font-size: 1.18rem;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  color: var(--text-primary);
+  line-height: 1.25;
+}
+
+.city-card-selected .city-card-name { color: var(--city-color, var(--accent)); }
+
+.city-card-blurb {
+  font-size: 0.9rem;
+  line-height: 1.5;
+  color: var(--text-muted);
+  margin: 0;
+}
+
+.city-card-selected .city-card-blurb { color: var(--text-secondary); }
+
+.onboarding-skip {
+  display: block;
+  width: 100%;
+  text-align: center;
+  margin-top: 14px;
+  background: none;
+  border: none;
+  color: var(--text-muted);
+  font-family: var(--font-ui);
+  font-size: 0.9rem;
+  cursor: pointer;
+  padding: 8px;
+}
+
+.onboarding-skip:hover { color: var(--text-secondary); text-decoration: underline; }
+
+@media (max-width: 600px) {
+  .onboarding-card { padding: 34px 22px; }
+  .city-grid { grid-template-columns: 1fr; }
+  .city-card { min-height: auto; }
+}
+
+/* ----------------------------------------------------------
+   News
+   ---------------------------------------------------------- */
+
+.news-tabs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 22px;
+  border-bottom: 1px solid var(--hairline);
+  padding-bottom: 14px;
+}
+
+.news-tab {
+  padding: 8px 15px;
+  border-radius: var(--r-full);
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--text-secondary);
+  background: var(--bg-inset);
+  border: 1px solid var(--border);
+  text-decoration: none;
+}
+
+.news-tab:hover {
+  background: var(--bg-card);
+  color: var(--text-primary);
+  border-color: var(--border-strong);
+  transform: translateY(-1px);
+}
+
+.news-tab-active {
+  background: var(--accent);
+  color: #FFFFFF;
+  border-color: var(--accent);
+  box-shadow: var(--accent-glow);
+}
+
+.news-tab-active:hover { background: var(--accent); color: #FFFFFF; }
+
+.news-refresh { flex-shrink: 0; white-space: nowrap; margin-left: auto; }
+
+.news-list { display: flex; flex-direction: column; gap: 14px; }
+
+.news-card {
+  display: flex;
+  gap: 16px;
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--r-card);
+  padding: 16px;
+  text-decoration: none;
+  color: inherit;
+  box-shadow: var(--ring-highlight), var(--shadow-sm);
+}
+
+.news-card:hover {
+  border-color: var(--accent-line);
+  box-shadow: var(--ring-highlight), var(--shadow-md);
+  transform: translateY(-2px);
+}
+
+.news-card-image {
+  width: 150px;
+  height: 104px;
+  object-fit: cover;
+  border-radius: var(--r-input);
+  flex-shrink: 0;
+  background: var(--bg-inset);
+}
+
+.news-card-body {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.news-card-meta {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+  font-size: 0.75rem;
+  color: var(--text-muted);
+}
+
+.news-card-tag {
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  font-size: 0.62rem;
+  font-weight: 700;
+  padding: 3px 8px;
+  border-radius: var(--r-chip);
+  background: var(--bg-inset);
+  color: var(--text-secondary);
+}
+
+.news-card-tag-brain    { background: var(--accent-soft); color: var(--accent-strong); }
+.news-card-tag-mental   { background: rgba(139, 92, 246, 0.14); color: var(--accent-perceptual); }
+.news-card-tag-gut      { background: rgba(224, 140, 11, 0.16); color: var(--amber-500); }
+.news-card-tag-holistic { background: var(--status-preserved-bg); color: var(--status-preserved-text); }
+
+.news-card-source { font-weight: 600; color: var(--text-secondary); }
+.news-card-dot { color: var(--text-muted); }
+
+.news-card-title {
+  font-size: 1.08rem;
+  font-weight: 700;
+  letter-spacing: -0.015em;
+  line-height: 1.3;
+  color: var(--text-primary);
+  margin: 0;
+}
+
+.news-card:hover .news-card-title { color: var(--accent-strong); }
+
+.news-card-summary {
+  font-size: 0.88rem;
+  line-height: 1.5;
+  color: var(--text-secondary);
+  margin: 0;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.news-empty { text-align: center; padding: 72px 20px; color: var(--text-muted); }
+
+.news-empty-title {
+  font-size: 1.18rem;
+  font-weight: 700;
+  letter-spacing: -0.015em;
+  color: var(--text-primary);
+  margin-bottom: 6px;
+}
+
+@media (max-width: 600px) {
+  .news-card { flex-direction: column; gap: 12px; }
+  .news-card-image { width: 100%; height: 184px; }
+  .news-refresh { margin-left: 0; }
+}

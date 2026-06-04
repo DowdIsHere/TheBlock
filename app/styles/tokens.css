@@ -1,0 +1,289 @@
+/* ===========================================================
+   The Cognition Block — Design Tokens
+   Editorial-tech premium system. Dark-first.
+   Accent LOCKED: electric blue. One scale per axis.
+   Radius rule (documented): avatars/pills = full,
+   buttons/inputs = 12px, cards/panels = 18px, chips = 8px.
+   =========================================================== */
+
+:root, html.light {
+  /* ---- Brand spine: electric blue (single locked accent) ---- */
+  --accent: #2657E8;
+  --accent-strong: #1C46C9;
+  --accent-bright: #3B6BFF;
+  --accent-ink: #0B1E54;
+  --accent-soft: rgba(38, 87, 232, 0.10);
+  --accent-line: rgba(38, 87, 232, 0.22);
+
+  /* Legacy blue aliases (kept so existing rules resolve) */
+  --blue-900: #0C2340;
+  --blue-700: #1B3A5C;
+  --blue-600: #1E4D78;
+  --blue-500: var(--accent);
+  --blue-400: var(--accent-bright);
+  --blue-100: var(--accent-soft);
+  --blue-50: rgba(38, 87, 232, 0.06);
+
+  /* ---- Neutrals (cool, premium) ---- */
+  --slate-900: #0E1525;
+  --slate-700: #3A4660;
+  --slate-500: #6B768F;
+  --slate-300: #CBD3E1;
+  --slate-100: #EEF1F7;
+  --white: #FFFFFF;
+
+  --amber-500: #C2740A;
+  --amber-400: #E08C0B;
+  --green-600: #0E9466;
+
+  /* ---- Semantic text ---- */
+  --text-primary: #0E1525;
+  --text-secondary: #3F4A63;
+  --text-muted: #6B768F;
+
+  /* ---- Surfaces ---- */
+  --bg-page: #EDF0F6;
+  --bg-card: #FFFFFF;
+  --bg-inset: #F3F5FA;
+  --bg-elevated: #FFFFFF;
+
+  /* ---- Lines ---- */
+  --border: rgba(14, 21, 37, 0.08);
+  --border-strong: rgba(14, 21, 37, 0.15);
+  --hairline: rgba(14, 21, 37, 0.06);
+
+  /* ---- Depth (tinted, layered, never pure black) ---- */
+  --ring-highlight: inset 0 1px 0 rgba(255, 255, 255, 0.65);
+  --shadow-sm: 0 1px 2px rgba(16, 24, 40, 0.05), 0 1px 3px rgba(16, 24, 40, 0.05);
+  --shadow-md: 0 6px 16px -6px rgba(16, 24, 40, 0.12), 0 2px 6px -2px rgba(16, 24, 40, 0.06);
+  --shadow-lg: 0 24px 50px -18px rgba(16, 24, 40, 0.22);
+  --accent-glow: 0 8px 22px -8px rgba(38, 87, 232, 0.45);
+
+  /* ---- Status ---- */
+  --status-preserved-bg: #E8F8F0;
+  --status-preserved-text: #0E9466;
+  --status-compromised-bg: #FDECEC;
+  --status-compromised-text: #D23A3A;
+  --status-partial-bg: #FBF3E3;
+  --status-partial-text: #B8770C;
+  --status-info-bg: var(--accent-soft);
+  --status-info-text: var(--accent-strong);
+
+  --bar-track: #E2E7F0;
+  --bar-high: #0E9466;
+  --bar-med: #C2740A;
+  --bar-low: #D23A3A;
+
+  /* ---- Chrome ---- */
+  --header-bg: rgba(255, 255, 255, 0.72);
+  --surface-glass: rgba(255, 255, 255, 0.78);
+  --hero-grad: linear-gradient(150deg, #1C46C9 0%, #2657E8 55%, #3B6BFF 100%);
+  --focus-ring: 0 0 0 3px rgba(38, 87, 232, 0.22);
+
+  /* ---- Ambient page wash (very subtle) ---- */
+  --ambient:
+    radial-gradient(60rem 40rem at 12% -8%, rgba(38, 87, 232, 0.06), transparent 60%),
+    radial-gradient(50rem 36rem at 100% 0%, rgba(124, 58, 237, 0.05), transparent 55%);
+
+  color-scheme: light;
+}
+
+/* ===========================================================
+   Dark mode — the premium star.
+   Deep blue-black, glass-lite elevation, luminous accent.
+   =========================================================== */
+
+@media (prefers-color-scheme: dark) {
+  :root:not(.light) {
+    --accent: #5B86FF;
+    --accent-strong: #7AA0FF;
+    --accent-bright: #88AAFF;
+    --accent-ink: #C7D6FF;
+    --accent-soft: rgba(91, 134, 255, 0.14);
+    --accent-line: rgba(91, 134, 255, 0.30);
+
+    --blue-900: #060B18;
+    --blue-700: #0C1A30;
+    --blue-600: #0F2240;
+    --blue-500: var(--accent);
+    --blue-400: var(--accent-bright);
+    --blue-100: var(--accent-soft);
+    --blue-50: rgba(91, 134, 255, 0.07);
+
+    --slate-900: #EAEDF5;
+    --slate-700: #A4AEC6;
+    --slate-500: #6E7790;
+    --slate-300: rgba(255, 255, 255, 0.12);
+    --slate-100: #11151F;
+    --white: #141925;
+
+    --amber-500: #F5B548;
+    --amber-400: #E5A03A;
+    --green-600: #3BD592;
+
+    --text-primary: #EAEDF5;
+    --text-secondary: #A6B0C8;
+    --text-muted: #717B96;
+
+    --bg-page: #070A12;
+    --bg-card: #11151F;
+    --bg-inset: #0B0F18;
+    --bg-elevated: #161B27;
+
+    --border: rgba(255, 255, 255, 0.08);
+    --border-strong: rgba(255, 255, 255, 0.15);
+    --hairline: rgba(255, 255, 255, 0.05);
+
+    --ring-highlight: inset 0 1px 0 rgba(255, 255, 255, 0.07);
+    --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.45);
+    --shadow-md: 0 10px 28px -10px rgba(0, 0, 0, 0.6);
+    --shadow-lg: 0 28px 64px -22px rgba(0, 0, 0, 0.75);
+    --accent-glow: 0 8px 26px -8px rgba(91, 134, 255, 0.45);
+
+    --status-preserved-bg: rgba(59, 213, 146, 0.13);
+    --status-preserved-text: #3BD592;
+    --status-compromised-bg: rgba(248, 113, 113, 0.14);
+    --status-compromised-text: #FB8585;
+    --status-partial-bg: rgba(245, 181, 72, 0.14);
+    --status-partial-text: #F5B548;
+    --status-info-bg: var(--accent-soft);
+    --status-info-text: var(--accent-strong);
+
+    --bar-track: rgba(255, 255, 255, 0.09);
+    --bar-high: #3BD592;
+    --bar-med: #F5B548;
+    --bar-low: #FB8585;
+
+    --header-bg: rgba(13, 17, 26, 0.62);
+    --surface-glass: rgba(20, 25, 37, 0.66);
+    --hero-grad: linear-gradient(150deg, #0B1330 0%, #122150 55%, #1C3370 100%);
+    --focus-ring: 0 0 0 3px rgba(91, 134, 255, 0.30);
+
+    --ambient:
+      radial-gradient(64rem 44rem at 8% -10%, rgba(91, 134, 255, 0.10), transparent 60%),
+      radial-gradient(52rem 40rem at 102% -4%, rgba(124, 58, 237, 0.09), transparent 58%);
+
+    color-scheme: dark;
+  }
+}
+
+html.dark {
+  --accent: #5B86FF;
+  --accent-strong: #7AA0FF;
+  --accent-bright: #88AAFF;
+  --accent-ink: #C7D6FF;
+  --accent-soft: rgba(91, 134, 255, 0.14);
+  --accent-line: rgba(91, 134, 255, 0.30);
+
+  --blue-900: #060B18;
+  --blue-700: #0C1A30;
+  --blue-600: #0F2240;
+  --blue-500: var(--accent);
+  --blue-400: var(--accent-bright);
+  --blue-100: var(--accent-soft);
+  --blue-50: rgba(91, 134, 255, 0.07);
+
+  --slate-900: #EAEDF5;
+  --slate-700: #A4AEC6;
+  --slate-500: #6E7790;
+  --slate-300: rgba(255, 255, 255, 0.12);
+  --slate-100: #11151F;
+  --white: #141925;
+
+  --amber-500: #F5B548;
+  --amber-400: #E5A03A;
+  --green-600: #3BD592;
+
+  --text-primary: #EAEDF5;
+  --text-secondary: #A6B0C8;
+  --text-muted: #717B96;
+
+  --bg-page: #070A12;
+  --bg-card: #11151F;
+  --bg-inset: #0B0F18;
+  --bg-elevated: #161B27;
+
+  --border: rgba(255, 255, 255, 0.08);
+  --border-strong: rgba(255, 255, 255, 0.15);
+  --hairline: rgba(255, 255, 255, 0.05);
+
+  --ring-highlight: inset 0 1px 0 rgba(255, 255, 255, 0.07);
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.45);
+  --shadow-md: 0 10px 28px -10px rgba(0, 0, 0, 0.6);
+  --shadow-lg: 0 28px 64px -22px rgba(0, 0, 0, 0.75);
+  --accent-glow: 0 8px 26px -8px rgba(91, 134, 255, 0.45);
+
+  --status-preserved-bg: rgba(59, 213, 146, 0.13);
+  --status-preserved-text: #3BD592;
+  --status-compromised-bg: rgba(248, 113, 113, 0.14);
+  --status-compromised-text: #FB8585;
+  --status-partial-bg: rgba(245, 181, 72, 0.14);
+  --status-partial-text: #F5B548;
+  --status-info-bg: var(--accent-soft);
+  --status-info-text: var(--accent-strong);
+
+  --bar-track: rgba(255, 255, 255, 0.09);
+  --bar-high: #3BD592;
+  --bar-med: #F5B548;
+  --bar-low: #FB8585;
+
+  --header-bg: rgba(13, 17, 26, 0.62);
+  --surface-glass: rgba(20, 25, 37, 0.66);
+  --hero-grad: linear-gradient(150deg, #0B1330 0%, #122150 55%, #1C3370 100%);
+  --focus-ring: 0 0 0 3px rgba(91, 134, 255, 0.30);
+
+  --ambient:
+    radial-gradient(64rem 44rem at 8% -10%, rgba(91, 134, 255, 0.10), transparent 60%),
+    radial-gradient(52rem 40rem at 102% -4%, rgba(124, 58, 237, 0.09), transparent 58%);
+
+  color-scheme: dark;
+}
+
+/* ===========================================================
+   Cognitive spectrum — semantic block-type accents.
+   Same hues in both modes (brand identity). Used for parser
+   types / block tags, NOT decoration.
+   =========================================================== */
+:root {
+  --accent-spatial: #0EA5A0;
+  --accent-temporal: #E08C0B;
+  --accent-perceptual: #8B5CF6;
+  --accent-pattern: #2657E8;
+  --accent-symbolic: #E0484D;
+  --accent-social: #E0489B;
+  --accent-self: #10B981;
+  --accent-generative: #F0631F;
+  --accent-sequential: #FB8C3A;
+
+  /* ---- Type system ---- */
+  --font-display: 'Source Serif 4', Georgia, 'Times New Roman', serif;
+  --font-ui: 'Plus Jakarta Sans', 'IBM Plex Sans', system-ui, -apple-system, sans-serif;
+  --font-mono: 'IBM Plex Mono', ui-monospace, 'SF Mono', monospace;
+
+  /* ---- Radius scale (locked) ---- */
+  --r-chip: 8px;
+  --r-btn: 12px;
+  --r-input: 12px;
+  --r-card: 18px;
+  --r-panel: 20px;
+  --r-full: 999px;
+
+  /* ---- Motion ---- */
+  --ease: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+  --t-fast: 0.16s;
+  --t-mid: 0.26s;
+  --t-slow: 0.4s;
+
+  /* ---- Avatar gradients (refined, premium) ---- */
+  --grad-avatar: linear-gradient(140deg, var(--accent-pattern), var(--accent-perceptual));
+  --grad-avatar-warm: linear-gradient(140deg, var(--accent-temporal), var(--accent-social));
+  --grad-avatar-cool: linear-gradient(140deg, var(--accent-spatial), var(--accent-pattern));
+
+  /* ---- Layer scale ---- */
+  --z-base: 1;
+  --z-sticky: 50;
+  --z-nav: 100;
+  --z-overlay: 200;
+  --z-grain: 300;
+}
