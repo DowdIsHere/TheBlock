@@ -1,0 +1,319 @@
+/* ===========================================================
+   App shell — layout, sidebars, navigation, headers.
+   =========================================================== */
+
+.app-layout {
+  display: grid;
+  grid-template-columns: 264px 1fr 320px;
+  min-height: 100dvh;
+}
+
+/* ----------------------------------------------------------
+   Left sidebar — sticky glass rail
+   ---------------------------------------------------------- */
+
+.sidebar-left {
+  background: var(--surface-glass);
+  backdrop-filter: blur(20px) saturate(160%);
+  -webkit-backdrop-filter: blur(20px) saturate(160%);
+  border-right: 1px solid var(--border);
+  padding: 26px 16px 20px;
+  position: sticky;
+  top: 0;
+  height: 100dvh;
+  display: flex;
+  flex-direction: column;
+  overflow-y: auto;
+}
+
+.logo {
+  font-size: 1.18rem;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  line-height: 1.1;
+  color: var(--text-primary);
+  margin-bottom: 4px;
+  padding: 0 8px;
+}
+
+.logo-sub {
+  font-family: var(--font-mono);
+  font-size: 0.6rem;
+  text-transform: uppercase;
+  letter-spacing: 0.18em;
+  color: var(--text-muted);
+  margin-bottom: 30px;
+  padding: 0 8px;
+}
+
+.nav-section { margin-bottom: 22px; }
+
+.nav-label {
+  font-family: var(--font-mono);
+  font-size: 0.62rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.16em;
+  color: var(--text-muted);
+  margin-bottom: 10px;
+  padding-left: 14px;
+}
+
+.nav-item {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 11px 14px;
+  border-radius: var(--r-btn);
+  color: var(--text-secondary);
+  font-size: 0.9rem;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  cursor: pointer;
+  text-decoration: none;
+}
+
+/* Left accent rail that grows in on hover/active */
+.nav-item::before {
+  content: '';
+  position: absolute;
+  left: 4px;
+  top: 50%;
+  height: 0;
+  width: 3px;
+  border-radius: var(--r-full);
+  background: var(--accent);
+  transform: translateY(-50%);
+  transition: height var(--t-fast) var(--ease);
+}
+
+.nav-item:hover {
+  background: var(--bg-inset);
+  color: var(--text-primary);
+}
+
+.nav-item:hover::before { height: 16px; }
+
+.nav-item.active {
+  background: var(--accent-soft);
+  color: var(--accent-strong);
+}
+
+.nav-item.active::before { height: 22px; }
+
+.nav-item .icon {
+  width: 22px;
+  text-align: center;
+  font-size: 1.05rem;
+  filter: saturate(1.05);
+}
+
+.nav-item .badge {
+  margin-left: auto;
+  background: var(--accent);
+  color: #FFFFFF;
+  font-family: var(--font-mono);
+  font-size: 0.62rem;
+  font-weight: 600;
+  padding: 2px 7px;
+  border-radius: var(--r-full);
+  box-shadow: var(--accent-glow);
+}
+
+.nav-spacer { flex: 1; min-height: 16px; }
+
+/* Theme toggle */
+.theme-toggle {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 38px;
+  height: 38px;
+  border-radius: var(--r-btn);
+  border: 1px solid var(--border);
+  background: var(--bg-inset);
+  cursor: pointer;
+  font-size: 1.05rem;
+  margin-bottom: 12px;
+  align-self: flex-start;
+  color: var(--text-muted);
+}
+
+.theme-toggle:hover {
+  border-color: var(--border-strong);
+  color: var(--text-primary);
+  background: var(--bg-card);
+  transform: translateY(-1px);
+}
+
+.theme-toggle:active { transform: translateY(0) scale(0.96); }
+
+/* User card */
+.user-card {
+  display: flex;
+  align-items: center;
+  gap: 11px;
+  padding: 11px 12px;
+  margin-top: 6px;
+  background: var(--bg-inset);
+  border: 1px solid var(--border);
+  border-radius: var(--r-card);
+  cursor: pointer;
+  text-decoration: none;
+  color: inherit;
+  box-shadow: var(--ring-highlight);
+}
+
+.user-card:hover {
+  border-color: var(--accent-line);
+  transform: translateY(-1px);
+  box-shadow: var(--ring-highlight), var(--shadow-md);
+}
+
+.avatar {
+  width: 38px;
+  height: 38px;
+  border-radius: var(--r-full);
+  background: var(--grad-avatar);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-ui);
+  font-weight: 700;
+  font-size: 0.8rem;
+  color: #FFFFFF;
+  flex-shrink: 0;
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.18), var(--shadow-sm);
+}
+
+.user-name {
+  font-size: 0.86rem;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  color: var(--text-primary);
+}
+
+.user-parser {
+  font-family: var(--font-mono);
+  font-size: 0.64rem;
+  color: var(--text-muted);
+}
+
+/* ----------------------------------------------------------
+   Main content
+   ---------------------------------------------------------- */
+
+.main-content {
+  padding: 30px 28px 48px;
+  max-height: 100dvh;
+  overflow-y: auto;
+  max-width: 100%;
+}
+
+.view-header { margin-bottom: 26px; }
+
+.view-title {
+  font-size: clamp(1.7rem, 3vw, 2.25rem);
+  font-weight: 700;
+  letter-spacing: -0.025em;
+  line-height: 1.1;
+  margin-bottom: 6px;
+  color: var(--text-primary);
+}
+
+.view-subtitle {
+  color: var(--text-muted);
+  font-size: 0.92rem;
+  letter-spacing: -0.005em;
+}
+
+/* ----------------------------------------------------------
+   Right sidebar — sticky glass rail
+   ---------------------------------------------------------- */
+
+.sidebar-right {
+  background: var(--surface-glass);
+  backdrop-filter: blur(20px) saturate(160%);
+  -webkit-backdrop-filter: blur(20px) saturate(160%);
+  border-left: 1px solid var(--border);
+  padding: 26px 18px;
+  position: sticky;
+  top: 0;
+  height: 100dvh;
+  overflow-y: auto;
+}
+
+.sidebar-section { margin-bottom: 28px; }
+
+.sidebar-title {
+  font-size: 0.95rem;
+  font-weight: 700;
+  letter-spacing: -0.015em;
+  color: var(--text-primary);
+  margin-bottom: 14px;
+}
+
+/* ----------------------------------------------------------
+   Mobile bottom navigation — glass dock
+   ---------------------------------------------------------- */
+
+.mobile-nav {
+  display: none;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: var(--header-bg);
+  backdrop-filter: blur(20px) saturate(160%);
+  -webkit-backdrop-filter: blur(20px) saturate(160%);
+  border-top: 1px solid var(--border);
+  padding: 8px 0 max(8px, env(safe-area-inset-bottom));
+  z-index: var(--z-nav);
+  box-shadow: 0 -8px 24px -12px rgba(0, 0, 0, 0.25);
+}
+
+.mobile-nav-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 3px;
+  padding: 6px 0;
+  color: var(--text-muted);
+  text-decoration: none;
+  font-size: 0.64rem;
+  font-weight: 600;
+  flex: 1;
+}
+
+.mobile-nav-item.active { color: var(--accent); }
+
+.mobile-nav-icon {
+  font-size: 1.2rem;
+  line-height: 1;
+  transition: transform var(--t-fast) var(--ease);
+}
+
+.mobile-nav-item.active .mobile-nav-icon { transform: translateY(-1px) scale(1.08); }
+
+.mobile-nav-label { font-family: var(--font-ui); letter-spacing: -0.01em; }
+
+/* ----------------------------------------------------------
+   Responsive
+   ---------------------------------------------------------- */
+
+@media (max-width: 1180px) {
+  .app-layout { grid-template-columns: 240px 1fr 280px; }
+}
+
+@media (max-width: 980px) {
+  .app-layout { grid-template-columns: 1fr; }
+  .sidebar-left, .sidebar-right { display: none; }
+  .mobile-nav { display: flex; }
+  .main-content { padding: 24px 18px 96px; }
+}
+
+@media (max-width: 600px) {
+  .main-content { padding: 20px 16px 96px; }
+  .view-title { font-size: 1.65rem; }
+}

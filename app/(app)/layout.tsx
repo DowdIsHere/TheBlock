@@ -5,6 +5,7 @@ import { getSessionUserId } from '@/lib/session'
 import { redirect } from 'next/navigation'
 import { LogoutButton } from './LogoutButton'
 import { MobileNav } from './MobileNav'
+import { SidebarNav } from './SidebarNav'
 import { CrisisResources } from './CrisisResources'
 import { SessionTimer } from './SessionTimer'
 import { AppShell } from './AppShell'
@@ -31,6 +32,13 @@ export default async function AppLayout({
   const initials = `${user.firstName[0]}${user.lastName[0]}`.toUpperCase()
 
   return (
+    <div className="app-layout">
+      {/* Left Sidebar */}
+      <aside className="sidebar-left">
+        <div className="logo">The Cognition Block</div>
+        <div className="logo-sub">Let's talk about it...</div>
+
+        <SidebarNav />
     <AppShell>
       <a href="#main-content" className="skip-link">Skip to content</a>
 

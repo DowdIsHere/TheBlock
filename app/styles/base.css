@@ -1,0 +1,224 @@
+/* ===========================================================
+   Base — reset, typography, ambient depth, motion, forms.
+   =========================================================== */
+
+*, *::before, *::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  font-family: var(--font-ui);
+  background: var(--bg-page);
+  color: var(--text-primary);
+  min-height: 100dvh;
+  line-height: 1.6;
+  font-size: 1rem;
+  font-feature-settings: 'ss01', 'cv01';
+  letter-spacing: -0.005em;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+}
+
+/* Ambient page wash — fixed, non-interactive, GPU-cheap.
+   Gives the dark theme its depth without per-card blur. */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  background: var(--ambient);
+}
+
+/* Keep real content above the wash */
+.app-layout,
+.auth-page,
+.onboarding-card {
+  position: relative;
+  z-index: var(--z-base);
+}
+
+::selection {
+  background: var(--accent-soft);
+  color: var(--text-primary);
+}
+
+a {
+  color: inherit;
+}
+
+/* Smooth, intentional theme + interaction transitions (MOTION 5).
+   transform/opacity/colors only — never layout properties. */
+body, .card, .sidebar-left, .sidebar-right,
+.post-card, .compose-box, .btn, .nav-item,
+.match-card, .group-card, .discovery-card,
+.group-full-card, .conversations-list, .chat-area,
+.profile-header-card, .chat-input, .compose-input,
+.conversation-item, .trend-item, input, textarea,
+.news-card, .news-tab, .mood-option, .city-card,
+.crisis-toggle, .crisis-link, .post-action, .compose-tool,
+.theme-toggle, .user-card, .status-tag, .profile-parser-tag {
+  transition:
+    color var(--t-slow) var(--ease),
+    background-color var(--t-slow) var(--ease),
+    border-color var(--t-mid) var(--ease),
+    box-shadow var(--t-mid) var(--ease),
+    transform var(--t-fast) var(--ease);
+}
+
+/* ===========================================================
+   Display typography helpers
+   =========================================================== */
+
+.logo, .view-title, .auth-logo, .auth-title, .sidebar-title,
+.post-author, .group-name, .group-full-name, .trend-topic,
+.discovery-name, .profile-name-large, .conversations-header,
+.news-card-title, .news-empty-title, .mood-title, .city-card-name {
+  font-family: var(--font-display);
+  font-feature-settings: 'liga', 'dlig';
+}
+
+/* ===========================================================
+   Motion library (entrances + micro-interactions)
+   =========================================================== */
+
+@keyframes cb-rise {
+  from { opacity: 0; transform: translateY(10px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes cb-fade {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+@keyframes slideDown {
+  from { opacity: 0; transform: translateY(-8px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes cb-shimmer {
+  0%   { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+
+@keyframes cb-pulse-ring {
+  0%   { box-shadow: 0 0 0 0 var(--accent-line); }
+  70%  { box-shadow: 0 0 0 6px transparent; }
+  100% { box-shadow: 0 0 0 0 transparent; }
+}
+
+/* Scroll-free entrance: cards rise once on mount. Cheap, motivated
+   (establishes hierarchy as content loads). */
+.post-card,
+.discovery-card,
+.group-full-card,
+.news-card {
+  animation: cb-rise var(--t-mid) var(--ease) both;
+}
+
+/* Skeleton shimmer utility (used by loading states) */
+.cb-skeleton {
+  background: linear-gradient(
+    100deg,
+    var(--bg-inset) 30%,
+    var(--border) 50%,
+    var(--bg-inset) 70%
+  );
+  background-size: 200% 100%;
+  animation: cb-shimmer 1.4s linear infinite;
+  border-radius: var(--r-chip);
+}
+
+/* ===========================================================
+   Forms — base. Labels above inputs (handled in markup),
+   AA-contrast focus rings, premium rounded inputs.
+   =========================================================== */
+
+input[type="text"],
+input[type="email"],
+input[type="password"],
+input[type="search"],
+textarea,
+select {
+  background: var(--bg-inset);
+  border: 1px solid var(--border);
+  border-radius: var(--r-input);
+  color: var(--text-primary);
+  font-family: var(--font-ui);
+  font-size: 0.9rem;
+  letter-spacing: -0.005em;
+}
+
+input[type="text"]:focus,
+input[type="email"]:focus,
+input[type="password"]:focus,
+input[type="search"]:focus,
+textarea:focus,
+select:focus {
+  outline: none;
+  border-color: var(--accent);
+  box-shadow: var(--focus-ring);
+  background: var(--bg-card);
+}
+
+input::placeholder,
+textarea::placeholder {
+  color: var(--text-muted);
+  opacity: 1;
+}
+
+label {
+  font-family: var(--font-ui);
+  font-size: 0.82rem;
+  font-weight: 600;
+  letter-spacing: -0.005em;
+  color: var(--text-secondary);
+}
+
+/* Keyboard focus visibility everywhere */
+a:focus-visible,
+button:focus-visible {
+  outline: none;
+  box-shadow: var(--focus-ring);
+  border-radius: var(--r-btn);
+}
+
+/* ===========================================================
+   Scrollbars — slim, themed
+   =========================================================== */
+
+* {
+  scrollbar-width: thin;
+  scrollbar-color: var(--border-strong) transparent;
+}
+
+::-webkit-scrollbar { width: 8px; height: 8px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb {
+  background: var(--border-strong);
+  border-radius: var(--r-full);
+  border: 2px solid transparent;
+  background-clip: padding-box;
+}
+::-webkit-scrollbar-thumb:hover { background: var(--text-muted); background-clip: padding-box; }
+
+/* ===========================================================
+   Reduced motion — collapse everything above MOTION 3.
+   =========================================================== */
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+}
