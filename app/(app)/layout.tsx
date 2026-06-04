@@ -32,13 +32,6 @@ export default async function AppLayout({
   const initials = `${user.firstName[0]}${user.lastName[0]}`.toUpperCase()
 
   return (
-    <div className="app-layout">
-      {/* Left Sidebar */}
-      <aside className="sidebar-left">
-        <div className="logo">The Cognition Block</div>
-        <div className="logo-sub">Let's talk about it...</div>
-
-        <SidebarNav />
     <AppShell>
       <a href="#main-content" className="skip-link">Skip to content</a>
 
@@ -47,28 +40,7 @@ export default async function AppLayout({
           <div className="logo">The Cognition Block</div>
           <div className="logo-sub">Let&apos;s talk about it...</div>
 
-          <nav className="nav-section" aria-label="Main navigation">
-            <Link href="/feed" className="nav-item">
-              <span className="icon" aria-hidden="true">🏠</span>
-              <span>Feed</span>
-            </Link>
-            <Link href="/news" className="nav-item">
-              <span className="icon" aria-hidden="true">📰</span>
-              <span>News</span>
-            </Link>
-            <Link href="/discover" className="nav-item">
-              <span className="icon" aria-hidden="true">🔍</span>
-              <span>Discover</span>
-            </Link>
-            <Link href="/groups" className="nav-item">
-              <span className="icon" aria-hidden="true">👥</span>
-              <span>Groups</span>
-            </Link>
-            <Link href="/messages" className="nav-item">
-              <span className="icon" aria-hidden="true">💬</span>
-              <span>Messages</span>
-            </Link>
-          </nav>
+          <SidebarNav />
 
           <div className="nav-section">
             <div className="nav-label">My Groups</div>
