@@ -1,0 +1,12 @@
+{
+  "name": "cognitive-model-worksheet",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Static deploy of the Cognitive Model worksheet (single page).",
+  "engines": {
+    "node": ">=20"
+  },
+  "scripts": {
+    "start": "node server.js"
+  }
+}
