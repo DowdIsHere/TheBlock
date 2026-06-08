@@ -81,6 +81,7 @@
   }
   .btn.ghost{background:transparent;color:var(--ink);box-shadow:inset 0 0 0 1px var(--ink)}
   .btn:hover{opacity:.88}
+  .btn:disabled{opacity:.5;cursor:default}
   /* ---- modal / wheel ---- */
   .overlay{
     position:fixed;inset:0;background:rgba(30,25,18,.6);backdrop-filter:blur(3px);
@@ -112,7 +113,7 @@
         <span>Something happens. This step covers only the facts of what happened, without any interpretation.</span>
       </div>
       <div class="field-wrap">
-        <textarea rows="2" placeholder="Describe the situation…"></textarea>
+        <textarea id="f-situation" rows="2" placeholder="Describe the situation…"></textarea>
       </div>
     </div>
 
@@ -124,8 +125,8 @@
         <span>You interpret the situation. These interpretations aren't always accurate — there are many ways to think about the same situation.</span>
       </div>
       <div class="field-wrap two">
-        <div class="col"><h4>My Actual Thought</h4><textarea rows="3" placeholder="What went through your mind?"></textarea></div>
-        <div class="col"><h4>Alternate Thought</h4><textarea rows="3" placeholder="A different way to see it…"></textarea></div>
+        <div class="col"><h4>My Actual Thought</h4><textarea id="f-actual-thought" rows="3" placeholder="What went through your mind?"></textarea></div>
+        <div class="col"><h4>Alternate Thought</h4><textarea id="f-alt-thought" rows="3" placeholder="A different way to see it…"></textarea></div>
       </div>
     </div>
 
@@ -158,25 +159,26 @@
         <span>You respond to the situation based on your thoughts and feelings.</span>
       </div>
       <div class="field-wrap two">
-        <div class="col"><h4>From Actual Thought</h4><textarea rows="3" placeholder="How did you act?"></textarea></div>
-        <div class="col"><h4>From Alternate Thought</h4><textarea rows="3" placeholder="How might you act instead?"></textarea></div>
+        <div class="col"><h4>From Actual Thought</h4><textarea id="f-behavior-actual" rows="3" placeholder="How did you act?"></textarea></div>
+        <div class="col"><h4>From Alternate Thought</h4><textarea id="f-behavior-alt" rows="3" placeholder="How might you act instead?"></textarea></div>
       </div>
     </div>
 
     <div class="actions">
-      <button class="btn" onclick="window.print()">Print / Save PDF</button>
+      <button class="btn" id="submitBtn">Submit</button>
+      <button class="btn ghost" onclick="window.print()">Print / Save PDF</button>
       <button class="btn ghost" onclick="if(confirm('Clear the whole sheet?'))location.reload()">Clear</button>
     </div>
+    <div id="submitStatus" style="text-align:center;margin-top:14px;font-size:14px;min-height:18px"></div>
   </div>
 
   <!-- modal -->
   <div class="overlay" id="overlay">
     <div class="modal">
       <button class="close-x" id="closeX">&times;</button>
-      <h3>Emotion Wheel</h3>
-      <p>Tap a word on the outer ring to add it. Inner rings work too.</p>
+      <h3 id="wheelTitle">Emotion Wheel</h3>
+      <p id="wheelHint">Tap a core emotion to open it.</p>
       <canvas id="wheel"></canvas>
-      <div class="wheel-center" id="hover">Hover or tap a segment</div>
     </div>
   </div>
 
@@ -228,119 +230,224 @@ const WHEEL = [
   ]},
 ];
 
-/* ---------- Build flat segment geometry ---------- */
+/* ---------- Setup ---------- */
 const canvas = document.getElementById("wheel");
 const ctx = canvas.getContext("2d");
-let DPR = window.devicePixelRatio || 1;
-let segments = []; // {a0,a1,r0,r1,label,color}
+const DPR = window.devicePixelRatio || 1;
+const overlay = document.getElementById("overlay");
+const titleEl = document.getElementById("wheelTitle");
+const hintEl  = document.getElementById("wheelHint");
+let currentTarget = null;
 
-function shade(hex,amt){ // lighten toward white by amt 0..1
+/* view state: null = cores; otherwise index into WHEEL of the opened core */
+let openCore = null;
+/* animation 0..1 */
+let anim = 1, animFrom = null, animTo = null, animStart = 0;
+const ANIM_MS = 380;
+
+let hitZones = []; // {a0,a1,r0,r1,label,color,kind,coreIdx}
+
+function shade(hex,amt){
   const n=parseInt(hex.slice(1),16);
   let r=(n>>16)&255,g=(n>>8)&255,b=n&255;
   r=Math.round(r+(255-r)*amt);g=Math.round(g+(255-g)*amt);b=Math.round(b+(255-b)*amt);
   return `rgb(${r},${g},${b})`;
 }
+function colorForLabel(lbl){
+  for(const z of hitZones){ if(z.label===lbl) return z.color; }
+  // fallback: search data
+  for(const c of WHEEL){
+    if(c.core===lbl) return c.color;
+    for(const m of c.mids){
+      if(m.name===lbl) return shade(c.color,.3);
+      if(m.outer.includes(lbl)) return shade(c.color,.55);
+    }
+  }
+  return "#ddd";
+}
+const easeInOut = t => t<.5 ? 2*t*t : 1-Math.pow(-2*t+2,2)/2;
 
-function buildSegments(){
-  segments=[];
-  const totalOuter = WHEEL.reduce((s,c)=>s+c.mids.reduce((m,md)=>m+md.outer.length,0),0);
-  let ang = -Math.PI/2; // start top
-  const step = (Math.PI*2)/totalOuter;
-  WHEEL.forEach(core=>{
-    let coreOuterCount = core.mids.reduce((m,md)=>m+md.outer.length,0);
-    const coreStart=ang;
-    core.mids.forEach(mid=>{
-      const midStart=ang;
-      const midCount=mid.outer.length;
-      mid.outer.forEach(o=>{
-        segments.push({a0:ang,a1:ang+step,ring:2,label:o,color:shade(core.color,.55)});
-        ang+=step;
-      });
-      segments.push({a0:midStart,a1:ang,ring:1,label:mid.name,color:shade(core.color,.3)});
-    });
-    segments.push({a0:coreStart,a1:ang,ring:0,label:core.core,color:core.color});
+/* ---------- Drawing ---------- */
+function wedge(cx,cy,r0,r1,a0,a1,fill){
+  ctx.beginPath();
+  ctx.arc(cx,cy,r1,a0,a1);
+  ctx.arc(cx,cy,r0,a1,a0,true);
+  ctx.closePath();
+  ctx.fillStyle=fill;ctx.fill();
+  ctx.strokeStyle="rgba(255,255,255,.85)";ctx.lineWidth=2;ctx.stroke();
+}
+function radialLabel(cx,cy,a,r,text,size,bold){
+  ctx.save();
+  ctx.translate(cx+Math.cos(a)*r, cy+Math.sin(a)*r);
+  let rot=a; if(rot>Math.PI/2||rot<-Math.PI/2) rot+=Math.PI;
+  ctx.rotate(rot);
+  ctx.fillStyle="#2a2620";
+  ctx.font=`${bold?"bold ":""}${size}px Georgia`;
+  ctx.textAlign="center";ctx.textBaseline="middle";
+  ctx.fillText(text,0,0);
+  ctx.restore();
+}
+function centerText(cx,cy,lines,size){
+  ctx.fillStyle="#2a2620";ctx.font=`bold ${size}px Georgia`;
+  ctx.textAlign="center";ctx.textBaseline="middle";
+  lines.forEach((l,i)=>ctx.fillText(l,cx,cy+(i-(lines.length-1)/2)*(size*1.15)));
+}
+
+function drawCores(progress){
+  // progress 1 = fully showing cores
+  const size=canvas.clientWidth, cx=size/2, cy=size/2, R=size/2;
+  const r0=R*0.13, r1=R*0.97*progress + R*0.13*(1-progress);
+  const n=WHEEL.length, step=(Math.PI*2)/n;
+  let a=-Math.PI/2;
+  WHEEL.forEach((c,i)=>{
+    wedge(cx,cy,r0,r1,a,a+step,c.color);
+    if(progress>.55) radialLabel(cx,cy,a+step/2,(r0+r1)/2,c.core,Math.round(R*0.06),true);
+    hitZones.push({a0:a,a1:a+step,r0,r1,label:c.core,color:c.color,kind:"core",coreIdx:i});
+    a+=step;
   });
 }
 
-function ringRadii(){
-  const R = canvas.clientWidth/2;
-  return [ [R*0.16,R*0.40], [R*0.40,R*0.66], [R*0.66,R*0.99] ];
+function drawOpenCore(coreIdx,progress){
+  const c=WHEEL[coreIdx];
+  const size=canvas.clientWidth, cx=size/2, cy=size/2, R=size/2;
+  // hub shows the core name (tap to go back)
+  const hubR=R*0.26;
+  // branches occupy the full circle, fanned out
+  const r0=hubR, rMid=R*0.60, r1=R*0.97;
+  const mids=c.mids;
+  const totalOuter=mids.reduce((s,m)=>s+m.outer.length,0);
+  const stepOuter=(Math.PI*2)/totalOuter*progress; // grow in
+  let a=-Math.PI/2 - (Math.PI*2)*(1-progress)/2; // slight unfurl
+  mids.forEach(m=>{
+    const midStart=a;
+    m.outer.forEach(o=>{
+      wedge(cx,cy,rMid,r1,a,a+stepOuter,shade(c.color,.55));
+      if(progress>.6) radialLabel(cx,cy,a+stepOuter/2,(rMid+r1)/2,o,Math.round(R*0.038),false);
+      hitZones.push({a0:a,a1:a+stepOuter,r0:rMid,r1,label:o,color:shade(c.color,.55),kind:"word",coreIdx});
+      a+=stepOuter;
+    });
+    const midEnd=a;
+    wedge(cx,cy,r0,rMid,midStart,midEnd,shade(c.color,.3));
+    if(progress>.6) radialLabel(cx,cy,(midStart+midEnd)/2,(r0+rMid)/2,m.name,Math.round(R*0.042),true);
+    hitZones.push({a0:midStart,a1:midEnd,r0,r1:rMid,label:m.name,color:shade(c.color,.3),kind:"word",coreIdx});
+  });
+  // hub
+  ctx.beginPath();ctx.arc(cx,cy,hubR,0,Math.PI*2);
+  ctx.fillStyle=c.color;ctx.fill();
+  ctx.strokeStyle="rgba(255,255,255,.9)";ctx.lineWidth=2;ctx.stroke();
+  centerText(cx,cy-hubR*0.18,[c.core],Math.round(R*0.06));
+  ctx.fillStyle="rgba(42,38,32,.7)";ctx.font=`${Math.round(R*0.03)}px Georgia`;
+  ctx.fillText("← back",cx,cy+hubR*0.45);
+  hitZones.push({hub:true,cx,cy,hubR,kind:"back"});
 }
 
-function draw(){
-  const size = canvas.clientWidth;
+function render(){
+  const size=canvas.clientWidth;
   canvas.width=size*DPR;canvas.height=size*DPR;
   ctx.setTransform(DPR,0,0,DPR,0,0);
   ctx.clearRect(0,0,size,size);
-  const cx=size/2,cy=size/2;
-  const radii=ringRadii();
-  segments.forEach(s=>{
-    const [r0,r1]=radii[s.ring];
-    ctx.beginPath();
-    ctx.arc(cx,cy,r1,s.a0,s.a1);
-    ctx.arc(cx,cy,r0,s.a1,s.a0,true);
-    ctx.closePath();
-    ctx.fillStyle=s.color;ctx.fill();
-    ctx.strokeStyle="rgba(255,255,255,.7)";ctx.lineWidth=1;ctx.stroke();
-    // label
-    const mid=(s.a0+s.a1)/2, rr=(r0+r1)/2;
-    ctx.save();
-    ctx.translate(cx+Math.cos(mid)*rr, cy+Math.sin(mid)*rr);
-    let rot=mid;
-    if(rot>Math.PI/2||rot<-Math.PI/2) rot+=Math.PI;
-    ctx.rotate(rot);
-    ctx.fillStyle="#2a2620";
-    ctx.font=`${s.ring===0?13:s.ring===1?11:10}px Georgia`;
-    ctx.textAlign="center";ctx.textBaseline="middle";
-    ctx.fillText(s.label,0,0);
-    ctx.restore();
-  });
+  hitZones=[];
+
+  if(anim<1){
+    const t=easeInOut(anim);
+    if(animTo===null){            // closing: cores fade in, open fades out
+      if(animFrom!==null) drawOpenCore(animFrom,1-t);
+      drawCores(t);
+    } else {                      // opening: cores shrink, open grows
+      drawCores(1-t);
+      drawOpenCore(animTo,t);
+      hitZones=hitZones.filter(z=>z.kind==="back"||z.coreIdx===animTo); // only target during open
+    }
+  } else {
+    if(openCore===null) drawCores(1);
+    else drawOpenCore(openCore,1);
+  }
 }
 
-function hit(x,y){
+function loop(ts){
+  if(anim<1){
+    if(!animStart) animStart=ts;
+    anim=Math.min(1,(ts-animStart)/ANIM_MS);
+    render();
+    requestAnimationFrame(loop);
+  }else{
+    render();
+  }
+}
+function startAnim(to){ // to = coreIdx to open, or null to close
+  animFrom=openCore; animTo=to; openCore=to;
+  anim=0; animStart=0;
+  updateChrome();
+  requestAnimationFrame(loop);
+}
+function updateChrome(){
+  if(openCore===null){
+    titleEl.textContent="Emotion Wheel";
+    hintEl.textContent="Tap a core emotion to open it.";
+  }else{
+    titleEl.textContent=WHEEL[openCore].core;
+    hintEl.textContent="Tap a word to add it · tap the center to go back.";
+  }
+}
+
+/* ---------- Hit testing ---------- */
+function pick(x,y){
+  // back hub first
+  for(const z of hitZones){
+    if(z.kind==="back"){
+      if(Math.hypot(x-z.cx,y-z.cy)<=z.hubR) return z;
+    }
+  }
   const size=canvas.clientWidth, cx=size/2, cy=size/2;
-  const dx=x-cx, dy=y-cy;
-  const dist=Math.hypot(dx,dy);
+  const dx=x-cx,dy=y-cy,dist=Math.hypot(dx,dy);
   let ang=Math.atan2(dy,dx);
-  const radii=ringRadii();
-  let ring=-1;
-  radii.forEach((rg,i)=>{ if(dist>=rg[0]&&dist<=rg[1]) ring=i; });
-  if(ring<0) return null;
-  // normalize angle to match segment range (segments use -PI/2 start, can exceed PI)
-  for(const s of segments){
-    if(s.ring!==ring) continue;
-    let a=ang;
-    while(a < s.a0) a+=Math.PI*2;
-    if(a>=s.a0 && a<=s.a1) return s;
+  for(const z of hitZones){
+    if(z.kind==="back") continue;
+    if(dist<z.r0||dist>z.r1) continue;
+    let a=ang; while(a<z.a0) a+=Math.PI*2;
+    if(a>=z.a0&&a<=z.a1) return z;
   }
   return null;
 }
 
-/* ---------- Modal + chips wiring ---------- */
-const overlay=document.getElementById("overlay");
-const hover=document.getElementById("hover");
-let currentTarget=null;
-
-const coreColors={};
-WHEEL.forEach(c=>coreColors[c.core]=c.color);
-function colorForLabel(lbl){
-  for(const s of segments){ if(s.label===lbl) return s.color; }
-  return "#ddd";
+/* ---------- Interaction ---------- */
+function onTap(e){
+  if(anim<1) return;
+  const r=canvas.getBoundingClientRect();
+  const pt = e.changedTouches ? e.changedTouches[0] : (e.touches ? e.touches[0] : e);
+  const px=pt.clientX-r.left;
+  const py=pt.clientY-r.top;
+  const z=pick(px,py);
+  if(!z) return;
+  if(z.kind==="core")      startAnim(z.coreIdx);
+  else if(z.kind==="back") startAnim(null);
+  else if(z.kind==="word"){ addChip(z.label); closeModal(); }
 }
-
-document.querySelectorAll(".add-feel").forEach(b=>{
-  b.addEventListener("click",()=>{
-    currentTarget=b.dataset.target;
-    overlay.classList.add("open");
-    requestAnimationFrame(()=>{buildSegments();draw();});
-  });
+canvas.addEventListener("click",onTap);
+canvas.addEventListener("touchend",e=>{e.preventDefault();onTap(e);},{passive:false});
+canvas.addEventListener("mousemove",e=>{
+  if(anim<1){canvas.style.cursor="default";return;}
+  const r=canvas.getBoundingClientRect();
+  canvas.style.cursor=pick(e.clientX-r.left,e.clientY-r.top)?"pointer":"default";
 });
-document.getElementById("closeX").onclick=()=>overlay.classList.remove("open");
-overlay.addEventListener("click",e=>{if(e.target===overlay)overlay.classList.remove("open");});
+
+/* ---------- Modal + chips ---------- */
+function openModal(target){
+  currentTarget=target;
+  openCore=null;anim=1;
+  overlay.classList.add("open");
+  updateChrome();
+  requestAnimationFrame(render);
+}
+function closeModal(){overlay.classList.remove("open");}
+document.querySelectorAll(".add-feel").forEach(b=>{
+  b.addEventListener("click",()=>openModal(b.dataset.target));
+});
+document.getElementById("closeX").onclick=closeModal;
+overlay.addEventListener("click",e=>{if(e.target===overlay)closeModal();});
 
 function addChip(label){
   const box=document.getElementById(currentTarget);
-  // avoid dup
   if([...box.querySelectorAll(".chip span")].some(s=>s.textContent===label)) return;
   const chip=document.createElement("span");
   chip.className="chip";
@@ -350,23 +457,61 @@ function addChip(label){
   box.appendChild(chip);
 }
 
-canvas.addEventListener("mousemove",e=>{
-  const r=canvas.getBoundingClientRect();
-  const s=hit(e.clientX-r.left,e.clientY-r.top);
-  hover.textContent=s?s.label:"Hover or tap a segment";
-  canvas.style.cursor=s?"pointer":"default";
-});
-function tap(e){
-  const r=canvas.getBoundingClientRect();
-  const cx=(e.touches?e.touches[0].clientX:e.clientX)-r.left;
-  const cy=(e.touches?e.touches[0].clientY:e.clientY)-r.top;
-  const s=hit(cx,cy);
-  if(s){addChip(s.label);overlay.classList.remove("open");}
-}
-canvas.addEventListener("click",tap);
+window.addEventListener("resize",()=>{if(overlay.classList.contains("open"))render();});
 
-buildSegments();
-window.addEventListener("resize",()=>{if(overlay.classList.contains("open")){buildSegments();draw();}});
+/* ---------- Submit to Supabase (bootleg backend) ---------- */
+const SUPABASE_URL = "https://ccwtaqwnnsmmjfjmcfns.supabase.co";
+const SUPABASE_KEY = "sb_publishable_fu5C5Z7l7vcy4QFI6xoLPA_r4h3XSqa";
+
+const val   = id => document.getElementById(id).value.trim();
+const chips = id => [...document.querySelectorAll(`#${id} .chip span`)].map(s=>s.textContent.trim());
+
+const submitBtn=document.getElementById("submitBtn");
+const submitStatus=document.getElementById("submitStatus");
+
+submitBtn.addEventListener("click", async ()=>{
+  const payload={
+    situation:           val("f-situation"),
+    actual_thought:      val("f-actual-thought"),
+    alternate_thought:   val("f-alt-thought"),
+    feelings_actual:     chips("feel-actual"),
+    feelings_alternate:  chips("feel-alt"),
+    behavior_actual:     val("f-behavior-actual"),
+    behavior_alternate:  val("f-behavior-alt"),
+  };
+  const hasContent = payload.situation || payload.actual_thought || payload.alternate_thought
+    || payload.behavior_actual || payload.behavior_alternate
+    || payload.feelings_actual.length || payload.feelings_alternate.length;
+  if(!hasContent){
+    submitStatus.style.color="#a23";
+    submitStatus.textContent="Nothing to submit yet — fill in the sheet first.";
+    return;
+  }
+  submitBtn.disabled=true;
+  submitStatus.style.color="#6b6253";
+  submitStatus.textContent="Submitting…";
+  try{
+    const res=await fetch(`${SUPABASE_URL}/rest/v1/worksheet_submissions`,{
+      method:"POST",
+      headers:{
+        "apikey":SUPABASE_KEY,
+        "Authorization":`Bearer ${SUPABASE_KEY}`,
+        "Content-Type":"application/json",
+        "Prefer":"return=minimal"
+      },
+      body:JSON.stringify(payload)
+    });
+    if(!res.ok) throw new Error(`${res.status} ${await res.text()}`);
+    submitStatus.style.color="#3a7a3a";
+    submitStatus.textContent="Submitted ✓  Thank you.";
+  }catch(err){
+    submitStatus.style.color="#a23";
+    submitStatus.textContent="Couldn't submit — please try again.";
+    console.error(err);
+  }finally{
+    submitBtn.disabled=false;
+  }
+});
 </script>
 </body>
 </html>
